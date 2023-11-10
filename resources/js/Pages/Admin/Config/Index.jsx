@@ -18,7 +18,7 @@ export default function ({dados}) {
         post(route('admin.config.store'), {
             onSuccess: () => {
                 reset('logo', 'marca')
-                if (data.logo) window.location.reload()
+                if (data.logo) window.location.reload();
             },
         })
     }
