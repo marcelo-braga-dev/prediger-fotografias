@@ -1,0 +1,46 @@
+// material-ui
+import { Box, List, Typography } from '@mui/material';
+
+// project import
+import NavItem from './NavItem.jsx';
+
+const NavGroup = ({ item }) => {
+
+  const navCollapse = item.children?.map((menuItem) => {
+    switch (menuItem.type) {
+      case 'collapse':
+        return (
+          <Typography key={menuItem.id} variant="caption" color="error" sx={{ p: 2.5 }}>
+            collapse - only available in paid version
+          </Typography>
+        );
+      case 'item':
+        return <NavItem key={menuItem.id} item={menuItem} level={1} />;
+      default:
+        return (
+          <Typography key={menuItem.id} variant="h6" color="error" align="center">
+            error
+          </Typography>
+        );
+    }
+  });
+
+  return (
+    <List
+      subheader={
+        item.title && (
+          <Box sx={{ pl: 2, mb: 0.1 }}>
+            <Typography variant="subtitle2" color="textSecondary">
+              {item.title}
+            </Typography>
+          </Box>
+        )
+      }
+      sx={{ mb: 2, py: 0, zIndex: 0}}
+    >
+      {navCollapse}
+    </List>
+  );
+};
+
+export default NavGroup;
