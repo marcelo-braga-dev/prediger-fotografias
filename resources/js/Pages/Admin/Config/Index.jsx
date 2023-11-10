@@ -16,9 +16,11 @@ export default function ({dados}) {
     const submit = (e) => {
         e.preventDefault()
         post(route('admin.config.store'), {
-            onSuccess: () => reset('logo', 'marca'),
+            onSuccess: () => {
+                reset('logo', 'marca')
+                if (data.logo) window.location.reload()
+            },
         })
-        if (data.logo) window.location.reload()
     }
 
     return (
