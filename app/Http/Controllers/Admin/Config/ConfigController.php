@@ -26,6 +26,10 @@ class ConfigController extends Controller
             (new UploadImagesApp())->logo($request->logo);
         }
 
+        if ($request->logo_cliente) {
+            (new UploadImagesApp())->logoCliente($request->logo_cliente);
+        }
+
         if ($request->marca) {
             (new UploadImagesApp())->marca($request->marca);
         }

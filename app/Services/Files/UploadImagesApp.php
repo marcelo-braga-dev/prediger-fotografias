@@ -23,6 +23,22 @@ class UploadImagesApp
         return $dirFile;
     }
 
+    public function logoCliente($file)
+    {
+        $path = 'app';
+        Storage::makeDirectory($path);
+        $diretorio = Storage::path($path);
+
+        $img = Image::make($file->getContent());
+
+        $nameFile = 'logo_cliente.jpg';
+        $dirFile = $path . '/' . $nameFile;
+
+        $img->save($diretorio . '/' . $nameFile, 80);
+
+        return $dirFile;
+    }
+
     public function marca($file)
     {
         $path = 'app';

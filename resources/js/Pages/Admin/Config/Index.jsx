@@ -11,13 +11,14 @@ export default function ({dados}) {
         telefone: dados.telefone,
         logo: '',
         marca: '',
+        logo_cliente: ''
     });
 
     const submit = (e) => {
         e.preventDefault()
         post(route('admin.config.store'), {
             onSuccess: () => {
-                reset('logo', 'marca')
+                reset('email', 'telefone', 'marca', 'logo_cliente')
                 if (data.logo) window.location.reload();
             },
         })
@@ -35,7 +36,19 @@ export default function ({dados}) {
                         <button className="btn btn-success btn-sm ms-4">Salvar</button>
                     </div>
                     <div className="col-auto mb-4">
-                        {(data?.logo && progress) && <CircularProgress size={25} />}
+                        {(data?.logo && progress) && <CircularProgress size={25}/>}
+                    </div>
+                </div>
+                <div className="row mt-3">
+                    <div className="col-md-5 mb-4">
+                        <MuiFileInput label="Logo da Área do Cliente" fullWidth value={data?.logo_cliente}
+                                      onChange={e => setData('logo_cliente', e)}/>
+                    </div>
+                    <div className="col-auto mb-4">
+                        <button className="btn btn-success btn-sm ms-4">Salvar</button>
+                    </div>
+                    <div className="col-auto mb-4">
+                        {(data?.logo_cliente && progress) && <CircularProgress size={25}/>}
                     </div>
                 </div>
                 <div className="row mt-3">
@@ -47,7 +60,7 @@ export default function ({dados}) {
                         <button className="btn btn-success btn-sm ms-4">Salvar</button>
                     </div>
                     <div className="col-auto mb-4">
-                        {(data?.marca && progress) && <CircularProgress size={25} />}
+                        {(data?.marca && progress) && <CircularProgress size={25}/>}
                     </div>
                 </div>
                 <div className="row">

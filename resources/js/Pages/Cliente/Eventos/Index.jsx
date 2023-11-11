@@ -1,5 +1,5 @@
 import LayoutCliente from "@/Layouts/ClienteLayout/LayoutCliente.jsx";
-import {ListItemButton, TextField} from "@mui/material";
+import {ListItemButton} from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import CardMedia from "@mui/material/CardMedia";
@@ -11,17 +11,17 @@ export default function ({eventos}) {
         <LayoutCliente>
             <section>
                 <div className="row justify-content-between">
-                    <div className="col-auto pt-3">
-                        <h5>Eventos</h5>
+                    <div className="col-auto mb-0">
+                        <h6>Eventos</h6>
                     </div>
-                    <div className="col-auto">
-                        <TextField label="Pesquisar"/>
-                    </div>
+                    {/*<div className="col-auto">*/}
+                    {/*    <TextField label="Pesquisar"/>*/}
+                    {/*</div>*/}
                 </div>
             </section>
 
             <section>
-                <List>
+                <List className=" px-0 mx-0">
                     {eventos.map((item, index) => {
                         return (
                             <ListItemButton key={index} href={route('clientes.eventos.show', [item.token, item.id])}

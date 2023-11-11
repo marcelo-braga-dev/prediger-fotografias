@@ -10,6 +10,8 @@ import Header from './Header/index.jsx';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {Head} from "@inertiajs/react";
 import Card from "@mui/material/Card";
+import ModalsAllerts from "@/Components/Modals/AlertsModals.jsx";
+import ModalsAlerts from "@/Components/Modals/AlertsModals.jsx";
 
 const MainLayout = ({titlePage, card, menu, children, voltar}) => {
     const theme = useTheme();
@@ -26,7 +28,8 @@ const MainLayout = ({titlePage, card, menu, children, voltar}) => {
 
     return (
         <Box sx={{display: 'flex', width: '100%'}}>
-            <Head title={titlePage} />
+            <Head title={titlePage}/>
+            <ModalsAlerts/>
             <Header open={open} titlePage={titlePage} handleDrawerToggle={handleDrawerToggle}/>
             <Drawer open={open} menu={menu} handleDrawerToggle={handleDrawerToggle}/>
             <Box component="main" sx={{display: 'block', width: '100%', flexGrow: 1, p: {xs: 2, sm: 3}}}>

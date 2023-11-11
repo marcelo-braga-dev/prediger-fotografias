@@ -6,7 +6,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {TextField} from "@mui/material";
 
 export default function ({galerias}) {
 
@@ -16,11 +15,11 @@ export default function ({galerias}) {
                 <div className="col-auto pt-4">
                     <h5>Galerias</h5>
                 </div>
-                <div className="col-auto">
-                    <TextField label="Pesquisar..."/>
-                </div>
+                {/*<div className="col-auto">*/}
+                {/*    <TextField label="Pesquisar..."/>*/}
+                {/*</div>*/}
             </div>
-            <div className="row row-cols-3">
+            <div className="row row-cols-1 row-cols-md-3">
                 {galerias.map((item, index) => {
                     return <div key={index} className="col">
                         <Card sx={{maxWidth: 345}}>

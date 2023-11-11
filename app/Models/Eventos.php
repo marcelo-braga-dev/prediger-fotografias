@@ -89,10 +89,12 @@ class Eventos extends Model
 
     public function getPeloToken($hash)
     {
+        $qtdGaleria = (new Galerias())->qtdEvento(true);
+
         $dados = $this->newQuery()
             ->where('token', $hash)
             ->firstOrFail();
 
-        return $this->dados($dados);
+        return $this->dados($dados, $qtdGaleria);
     }
 }

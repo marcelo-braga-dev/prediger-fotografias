@@ -1,7 +1,6 @@
 import LayoutCliente from "@/Layouts/ClienteLayout/LayoutCliente.jsx";
-import {Box, Card, CardContent, ListItemButton, Typography} from "@mui/material";
+import {Card, CardContent, ListItemButton, Typography} from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -11,40 +10,46 @@ import * as React from "react";
 
 export default function ({evento, galerias}) {
     return (
-        <LayoutCliente voltar={route('clientes.eventos.index', 'fdsx')}>
+        <LayoutCliente titlePage="Evento" voltar={route('clientes.eventos.index', 'fdsx')}>
             <section>
-                <Card sx={{display: 'flex', justifyContent: 'space-between'}}>
-                    <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                        <CardContent sx={{flex: '1 0 auto'}}>
-                            <Typography component="div" variant="h5">
-                                {evento.nome}
-                            </Typography>
-                            <Typography className="mb-4" variant="subtitle1" color="text.secondary" component="div">
-                                {evento.descricao}
-                            </Typography>
-                            <Typography className="mb-4" variant="body1" color="text.secondary" component="div">
-                                Localidade: {evento.cidade}/{evento.estado}
-                            </Typography>
-                        </CardContent>
-                    </Box>
-                    <CardMedia
-                        component="img"
-                        sx={{width: 200}}
-                        image={evento.logo}
-                        alt="Imagem"
-                    />
+                <Card sx={{justifyContent: 'space-between'}}>
+                    <div className="row p-2 flex-lg-row-reverse justify-content-center">
+
+                        <CardMedia
+                            className="col-md-auto"
+                            component="img"
+                            sx={{maxWidth: 200}}
+                            image={evento.logo}
+                            alt="Imagem"
+                        />
+
+                        <div className="col mb-0 align-items-center">
+                            <CardContent sx={{flex: '1 0 auto'}}>
+                                <Typography component="div" variant="h5">
+                                    {evento.nome}
+                                </Typography>
+                                <Typography className="mb-4" variant="subtitle1" color="text.secondary" component="div">
+                                    {evento.descricao}
+                                </Typography>
+                                <Typography className="mb-4" variant="body1" color="text.secondary" component="div">
+                                    Localidade: {evento.cidade}/{evento.estado}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" component="div">
+                                    Galerias: {evento.galerias_qtd}
+                                </Typography>
+                            </CardContent>
+                        </div>
+                    </div>
                 </Card>
             </section>
 
             <section>
-                <div className="row mt-5">
-                    <div className="col-4 mb-2"><h6>Galerias do Evento</h6></div>
-                </div>
+                <h6 className="mt-5">Galerias do Evento</h6>
 
                 <List>
                     {galerias.map((item, index) => {
                         return (
-                            <ListItemButton key={index}  href={route('clientes.galerias.show', [item.token, item.id])}
+                            <ListItemButton key={index} href={route('clientes.galerias.show', [item.token, item.id])}
                                             className="border-bottom">
                                 <ListItem disablePadding>
                                     <ListItemAvatar>
@@ -63,6 +68,7 @@ export default function ({evento, galerias}) {
                         )
                     })}
                 </List>
+                {galerias.length === 0 && <span>Não há galerias.</span>}
             </section>
         </LayoutCliente>
     )

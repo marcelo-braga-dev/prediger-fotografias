@@ -13,28 +13,18 @@ export default function LayoutCliente({titlePage, voltar, children}) {
     return (<>
             <AppBar position="static" sx={{bgcolor: 'var(--main-color)', color: 'var(--main-text-color)'}}>
                 <Container maxWidth="md">
-                    <Toolbar disableGutters>
-                        <img className="me-5" alt="logo" style={{maxWidth: 150}} src="/storage/app/logo.jpg"/>
-
+                    <Toolbar disableGutters sx={{display: 'flex'}}>
                         <MenuPrincipal/>
-
-                        <Box sx={{flexGrow: 0}}>
-                            <a className="btn" href={route('clientes.contato')}
-                                    style={{background: 'var(--main-text-color)', color: 'var(--main-color)'}}>
-                                Contato
-                            </a>
-                        </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
 
-
-            <Box sx={{display: 'flex', width: '100%', minHeight: '84vh'}}>
+            <Box sx={{display: 'flex', width: '100%', minHeight: '78vh'}}>
                 <Head title={titlePage}/>
-                <Box component="main" sx={{display: 'block', width: '100%', flexGrow: 1, p: {xs: 2, sm: 3}}}>
-                    <Container maxWidth="md">
+                <Box component="main" sx={{display: 'block', width: '100%', flexGrow: 1}}>
+                    <Container maxWidth="md" className="pt-3">
                         {voltar &&
-                            <div className="row justify-content-between mb-2 border-bottom mb-4">
+                            <div className="row justify-content-between border-bottom mb-4">
                                 <div className="col-auto mb-1">
                                     <b>{titlePage}</b>
                                 </div>
@@ -49,10 +39,9 @@ export default function LayoutCliente({titlePage, voltar, children}) {
                     </Container>
                 </Box>
             </Box>
-            <div className="row justify-content-center bg-dark pt-3 ">
-                <div className="col-auto mb-3">
-                    <a href={route('login')} style={{textDecoration: "none", color: 'white'}}>Login</a>
-                </div>
+
+            <div className="text-center bg-dark pt-3 pb-3 mt-5">
+                <a href={route('login')} style={{textDecoration: "none", color: 'white'}}>Login</a>
             </div>
         </>
     );

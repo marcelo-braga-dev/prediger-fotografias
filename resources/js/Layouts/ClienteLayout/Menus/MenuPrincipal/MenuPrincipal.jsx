@@ -1,103 +1,112 @@
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import AdbIcon from "@mui/icons-material/Adb";
 import Button from "@mui/material/Button";
 import * as React from "react";
 
-const pages = ['Products', 'Pricing', 'Blog'];
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
-import menuItem from '@/Layouts/ClienteLayout/Menus/MenuPrincipal/menu-items';
+import menuItems from '@/Layouts/ClienteLayout/Menus/MenuPrincipal/menu-items';
 
 export default function MenuPrincipal() {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
+    const [state, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
+
+    const toggleDrawer = (anchor, open) => (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
+
+        setState({...state, [anchor]: open});
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    const list = (anchor) => (
+        <Box
+            sx={{width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250}}
+            role="presentation"
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+        >
+            <List>
+                {menuItems.map((item) => (
+                    <ListItem key={item.id} disablePadding>
+                        <ListItemButton href={item.url}>
+                            <ListItemText primary={item.nome}/>
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+            <Divider/>
+            <List>
+                <ListItem disablePadding>
+                    <ListItemButton href={route('clientes.contato')}>
+                        <ListItemText primary="Contato"/>
+                    </ListItemButton>
+                </ListItem>
+            </List>
+        </Box>
+    );
 
     return (<>
-            <Box className="p-5" sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="inherit"
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                    sx={{
-                        display: { xs: 'block', md: 'none' },
-                    }}
-                >
-                    {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                            <Typography textAlign="center">{page}</Typography>
-                        </MenuItem>
-                    ))}
-                </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href=""
-                sx={{
-                    mr: 2,
-                    display: { xs: 'flex', md: 'none' },
-                    flexGrow: 1,
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.3rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                }}
-            >
-                LOGO
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {menuItem.map((page) => (
-                    <Button
-                        key={page.id}
-                        sx={{ mr:2, my: 2, color: 'var(--main-text-color)', display: 'block' }}
-                        href={page.url}
+            <div className="row justify-content-between w-100">
+                <div className="col-auto mb-0">
+                    <img className="" alt="logo" style={{maxWidth: 150}} src="/storage/app/logo_cliente.jpg"/>
+                </div>
+                <div className="col-auto d-md-none mb-0 align-items-center">
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={toggleDrawer('left', true)}
+                        color="inherit"
                     >
-                        {page.nome}
-                    </Button>
-                ))}
-            </Box>
+                        <MenuIcon className=""/>
+                    </IconButton>
+                    <SwipeableDrawer
+                        anchor={'left'}
+                        open={state['left']}
+                        onClose={toggleDrawer('left', false)}
+                        onOpen={toggleDrawer('left', true)}
+                    >
+                        {list('left')}
+                    </SwipeableDrawer>
+                </div>
+
+                <div className="col d-none d-lg-flex mb-0 align-items-center">
+                    <Box sx={{flexGrow: 1, pl: 5, display: {xs: 'none', md: 'flex'}}}>
+                        {menuItems.map((page) => (
+                            <Button
+                                key={page.id}
+                                sx={{mr: 2, my: 2, color: 'var(--main-text-color)', display: 'block'}}
+                                href={page.url}
+                            >
+                                {page.nome}
+                            </Button>
+                        ))}
+                    </Box>
+                    <Box sx={{flexGrow: 0, alignItems: 'm'}}>
+                        <a className="btn btn-sm" href={route('clientes.contato')}
+                           style={{background: 'var(--main-text-color)', color: 'var(--main-color)'}}>
+                            Contato
+                        </a>
+                    </Box>
+                </div>
+            </div>
         </>
     )
 }

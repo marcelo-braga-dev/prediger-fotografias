@@ -125,9 +125,10 @@ class Galerias extends Model
         return $this->dados($dados, $eventos, $qtdArquivos);
     }
 
-    public function qtdEvento()
+    public function qtdEvento($publico = false)
     {
         $dados = $this->newQuery()
+            ->where($publico ? ['status' => 'publica'] : null)
             ->select(DB::raw('COUNT(id) as qtd, eventos_id as evento'))
             ->groupBy('evento')
             ->get();
