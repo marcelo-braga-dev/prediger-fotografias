@@ -6,6 +6,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import CardMedia from '@mui/material/CardMedia';
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined.js";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined.js";
 
 export default function ({eventos}) {
 
@@ -42,8 +44,18 @@ export default function ({eventos}) {
                                         primary={item.nome}
                                         secondary={<>
                                             <span className="d-block">{item.cidade}/{item.estado}</span>
-                                            <span className="d-block">{item.descricao}</span>
-                                            {/*<small className="me-3"><b>Galerias:</b></small>*/}
+                                            <span className="d-block mb-2">{item.descricao}</span>
+                                            <small className="me-3">Galerias: {item.galerias_qtd}</small>
+                                            <small className="me-3">
+                                                {item.status === 'publica' ?
+                                                    <small className="text-muted">
+                                                        <VisibilityOutlinedIcon color="success" fontSize="small"/>
+                                                    </small> :
+                                                    <span className="text-muted pe-5">
+                                                        <VisibilityOffOutlinedIcon fontSize="small"/>
+                                                    </span>
+                                                }
+                                            </small>
                                             {/*<small className="me-3">Quantidade: 5</small>*/}
                                             {/*<small className="me-3">Última atualização: 21/05/2023</small>*/}
                                         </>
