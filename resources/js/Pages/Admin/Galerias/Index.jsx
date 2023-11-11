@@ -18,13 +18,14 @@ export default function ({galerias}) {
             <section className="mb-4">
                 <div className="row justify-content-between">
                     <div className="col-auto">
+                        <a href={route('admin.galerias.create')} className="btn btn-primary">Nova Galeria</a>
+                    </div>
+                    <div className="col-auto">
                         <TextField label="Pesquisar"/>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-auto">
-                        <a href={route('admin.galerias.create')} className="btn btn-primary">Nova Galeria</a>
-                    </div>
+
                 </div>
             </section>
             <section>
@@ -65,9 +66,6 @@ export default function ({galerias}) {
                                     </Typography>
                                     <Typography className="mb-1" variant="body1" color="text.secondary" component="div">
                                         Localidade: {item.evento.localidade}
-                                    </Typography>
-                                    <Typography className="mt-3" variant="body2" color="text.secondary" component="div">
-                                        Quantidade de Arquivos: {item.qtd_arquivos}
                                     </Typography>
                                 </CardContent>
 

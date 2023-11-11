@@ -9,19 +9,17 @@ import * as React from "react";
 export default function ({eventos}) {
     return (
         <LayoutCliente>
-            <section>
-                <div className="row justify-content-between">
-                    <div className="col-auto mb-0">
-                        <h6>Eventos</h6>
-                    </div>
-                    {/*<div className="col-auto">*/}
-                    {/*    <TextField label="Pesquisar"/>*/}
-                    {/*</div>*/}
+            <div className="row justify-content-between">
+                <div className="col-auto pt-4">
+                    <h5>Eventos</h5>
                 </div>
-            </section>
+                {/*<div className="col-auto">*/}
+                {/*    <TextField label="Pesquisar..."/>*/}
+                {/*</div>*/}
+            </div>
 
             <section>
-                <List className=" px-0 mx-0">
+                <List className="">
                     {eventos.map((item, index) => {
                         return (
                             <ListItemButton key={index} href={route('clientes.eventos.show', [item.token, item.id])}

@@ -13,12 +13,11 @@ export default function ({evento, galerias}) {
         <LayoutCliente titlePage="Evento" voltar={route('clientes.eventos.index', 'fdsx')}>
             <section>
                 <Card sx={{justifyContent: 'space-between'}}>
-                    <div className="row p-2 flex-lg-row-reverse justify-content-center">
+                    <div className="row p-2 justify-content-center">
 
                         <CardMedia
-                            className="col-md-auto"
+                            className="col-md-4"
                             component="img"
-                            sx={{maxWidth: 200}}
                             image={evento.logo}
                             alt="Imagem"
                         />

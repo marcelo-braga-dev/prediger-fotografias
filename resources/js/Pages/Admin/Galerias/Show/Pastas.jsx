@@ -104,18 +104,15 @@ export default function Pastas({galeria, pastas}) {
                     <ListItemButton className="" onClick={() => selecionaPasta(pastas?.superior)}>
                         <ListItem className="p-0">
                             <ListItemIcon>
-                                <HomeOutlinedIcon className="me-1"/>
+                                {pastas?.nivel ? <ArrowBackIcon fontSize="small" className="me-2"/> :
+                                    <HomeOutlinedIcon className="me-1"/>}
+
                             </ListItemIcon>
                             <ListItemText
-                                primary={pastas?.nivel ? `.../${pastas?.superior_nome}/` : '/'}
+                                primary={pastas?.nivel ? `${pastas?.superior_nome}` : '/'}
                             />
                         </ListItem>
                     </ListItemButton>
-                </div>
-                <div className="col-auto mb-auto">
-                    <button onClick={() => selecionaPasta(pastas?.superior)}>
-                        <ArrowBackIcon fontSize="small"/>
-                    </button>
                 </div>
             </div>
 
