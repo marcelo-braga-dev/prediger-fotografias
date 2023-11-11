@@ -11,21 +11,23 @@ import MobileSection from './MobileSection.jsx';
 // ==============================|| HEADER - CONTENT ||============================== //
 
 const HeaderContent = ({titlePage}) => {
-  const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
-  return (
-    <>
-      {/*{!matchesXs && <Search />}*/}
-        <Box sx={{ width: '100%', ml: { xs: 0, md: 1 } }}>
-            {titlePage}
-        </Box>
-      {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
+    return (
+        <>
+            {/*{!matchesXs && <Search />}*/}
+            <div className="row w-100 text-truncate">
+                <div className="col-12  text-truncate">
+                    {titlePage}
+                </div>
+            </div>
+            {matchesXs && <Box sx={{width: '100%', ml: 1}}/>}
 
-      {/*<Notification />*/}
-      {!matchesXs && <Profile />}
-      {matchesXs && <MobileSection />}
-    </>
-  );
+            {/*<Notification />*/}
+            {!matchesXs && <Profile/>}
+            {matchesXs && <MobileSection/>}
+        </>
+    );
 };
 
 export default HeaderContent;

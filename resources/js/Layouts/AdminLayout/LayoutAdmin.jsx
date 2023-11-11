@@ -35,9 +35,9 @@ const MainLayout = ({titlePage, card, menu, children, voltar}) => {
             <Box component="main" sx={{display: 'block', width: '100%', flexGrow: 1, p: {xs: 2, sm: 3}}}>
                 <Container maxWidth="md" className="p-0 mt-5">
                     {voltar &&
-                        <div className="row justify-content-between mb-2 border-bottom mb-4">
+                        <div className="row justify-content-between mb-2">
                             <div className="col-auto mb-1">
-                                <b>{titlePage}</b>
+                                {/*<b>{titlePage}</b>*/}
                             </div>
                             <div className="col-auto mb-1">
                                 <a className="text-muted" href={voltar}><ArrowBackIcon sx={{fontSize: 15}}/></a>

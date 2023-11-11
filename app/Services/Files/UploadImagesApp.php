@@ -15,7 +15,7 @@ class UploadImagesApp
 
         $img = Image::make($file->getContent());
 
-        $nameFile = 'logo.jpg';
+        $nameFile = 'logo.png';
         $dirFile = $path . '/' . $nameFile;
 
         $img->save($diretorio . '/' . $nameFile, 80);
@@ -31,7 +31,7 @@ class UploadImagesApp
 
         $img = Image::make($file->getContent());
 
-        $nameFile = 'logo_cliente.jpg';
+        $nameFile = 'logo_cliente.png';
         $dirFile = $path . '/' . $nameFile;
 
         $img->save($diretorio . '/' . $nameFile, 80);

@@ -26,6 +26,7 @@ const Header = ({ open, titlePage, handleDrawerToggle }) => {
                 edge="start"
                 color="secondary"
                 sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+                className="me-1"
             >
                 {!open ? <MenuIcon /> : <MenuOpenIcon />}
             </IconButton>

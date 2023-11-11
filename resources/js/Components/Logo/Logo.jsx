@@ -6,7 +6,7 @@ const Logo = () => {
 
   return (
     <div className="me-4 mt-3 p-1 rounded">
-        <img src="/storage/app/logo.jpg" width="100%" alt="Logo"/>
+        <img src="/storage/app/logo.png" width="100%" alt="Logo"/>
     </div>
   );
 };
