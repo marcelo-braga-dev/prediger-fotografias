@@ -139,4 +139,11 @@ class Galerias extends Model
         }
         return $res;
     }
+
+    public function remove($id)
+    {
+        $this->newQuery()
+            ->find($id)
+            ->delete();
+    }
 }

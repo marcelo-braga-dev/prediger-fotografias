@@ -5,10 +5,60 @@ import IconButton from "@mui/material/IconButton";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import React, {useEffect, useState} from "react";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import {router} from "@inertiajs/react";
+import {Box} from "@mui/material";
+import Modal from "@mui/material/Modal";
+
+
+const Lightbox = ({imageUrl, onClose}) => {
+    return (
+        <div className="lightbox-overlay" onClick={onClose}>
+            <div className="lightbox-content">
+                <img src={imageUrl} alt="Imagem"/>
+                <button onClick={onClose} className="close-button">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export default function Galeria({arquivos}) {
     const [valueObject, setValueObject] = useState({});
     const [inputValue, setInputValue] = useState();
+
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [urlImage, setUrlImage] = useState('');
+    const [idArquivoExcluir, setIdArquivoExcluir] = useState();
+
+    const excluirArquivoModal = (id) => {
+        setIdArquivoExcluir(id)
+        handleOpen(true)
+    };
+
+    const excluirArquivo = () => {
+        router.post(route('admin.galerias-arquivos.destroy', idArquivoExcluir), {
+            _method: 'delete'
+        })
+        handleClose(false)
+        setIdArquivoExcluir(undefined)
+    };
+
+    const openLightbox = (url) => {
+        setUrlImage(url)
+        setLightboxOpen(true);
+    };
+
+    const closeLightbox = () => {
+        setLightboxOpen(false);
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const toggleValue = () => {
         if (valueObject[inputValue]) {
@@ -50,10 +100,10 @@ export default function Galeria({arquivos}) {
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
-                                   className={valueObject[item.id] ? "border-4 border-success" : ''}
-                                   onClick={() => setInputValue(item.id)}>
+                                   className={valueObject[item.id] ? "border-4 border-success" : ''}>
                         {item.tipo === 'imagem' &&
                             <img
+                                onClick={() => setInputValue(item.id)}
                                 srcSet={`${item.url_miniatura}?w=348&fit=crop&auto=format&dpr=2 2x`}
                                 src={`${item.url_miniatura}?w=348&fit=crop&auto=format`}
                                 alt={item.title}
@@ -62,7 +112,7 @@ export default function Galeria({arquivos}) {
                             />}
 
                         {item.tipo === 'video' &&
-                            <video controls muted>
+                            <video controls muted onClick={() => setInputValue(item.id)}>
                                 <source src={item.url_original} type="video/mp4"/>
                                 <source src={item.url_original} type="video/ogg"/>
                             </video>}
@@ -76,11 +126,23 @@ export default function Galeria({arquivos}) {
                             // title={item.title}
                             title={'ID: ' + item.id}
                             position="top"
-                            actionIcon={
+                            actionIcon={<>
+                                <IconButton sx={{color: 'white'}}
+                                            onClick={() => excluirArquivoModal(item.id)}>
+                                    <DeleteOutlineOutlinedIcon/>
+                                </IconButton>
+                                <IconButton sx={{color: 'white'}}
+                                            onClick={() => openLightbox(item.url_comprimida)}>
+                                    <VisibilityOutlinedIcon/>
+                                </IconButton>
+                                {lightboxOpen && (
+                                    <Lightbox imageUrl={urlImage} onClose={closeLightbox}/>
+                                )}
                                 <IconButton sx={{color: 'white'}}
                                             onClick={() => setInputValue(item.id)}>
                                     {valueObject[item.id] ? <StarIcon/> : <StarBorderIcon/>}
                                 </IconButton>
+                            </>
                             }
                             actionPosition="right"
                         />
@@ -88,5 +150,24 @@ export default function Galeria({arquivos}) {
                 );
             })}
         </ImageList>
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box className="modal-primary">
+                <h6>Confirmar Exclusão do Arquivo</h6>
+                <p>Deseja excluir essa galeria?</p>
+                <small className="text-danger">
+                    O aqruivo será excluído permanentemente.<br/>
+                    Essa operação é irreversível!</small>
+                <div className="text-end">
+                    <button className="btn btn-danger" onClick={() => excluirArquivo()}>
+                        Excluir
+                    </button>
+                </div>
+            </Box>
+        </Modal>
     </>)
 }

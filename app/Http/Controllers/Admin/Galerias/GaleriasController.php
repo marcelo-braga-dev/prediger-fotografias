@@ -86,6 +86,14 @@ class GaleriasController extends Controller
         return redirect()->route('admin.galerias.show', [$id, 'id_pasta' => $request['id_pasta']]);
     }
 
+    public function destroy($id)
+    {
+        (new Galerias())->remove($id);
+
+        modalSucesso('Galeria Deletada com sucesso!');
+        return redirect()->route('admin.galerias.index');
+    }
+
     public function alterarStatus($id, Request $request)
     {
         $status = $request->status ? (new GaleriasStatus())->publica() : (new GaleriasStatus())->privado();

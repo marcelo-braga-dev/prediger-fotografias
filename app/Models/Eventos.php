@@ -53,10 +53,11 @@ class Eventos extends Model
 
     public function find($id)
     {
+        $qtdGaleria = (new Galerias())->qtdEvento();
         $dados = $this->newQuery()
             ->find($id);
 
-        return $this->dados($dados);
+        return $this->dados($dados, $qtdGaleria);
     }
 
     private function dados($item, $qtdGaleria = null): array
@@ -96,5 +97,23 @@ class Eventos extends Model
             ->firstOrFail();
 
         return $this->dados($dados, $qtdGaleria);
+    }
+
+    public function alterarStatus($id, $status)
+    {
+        $this->newQuery()
+            ->find($id)
+            ->update(['status' => $status]);
+    }
+
+    public function remove($id)
+    {
+        $galerias = (new Galerias())->evento($id);
+
+        if (count($galerias)) throw new \DomainException('Exclua antes as galerias deste evento!');
+
+        $this->newQuery()
+            ->find($id)
+            ->delete();
     }
 }

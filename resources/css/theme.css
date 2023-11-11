@@ -20,3 +20,15 @@
     --btn-primary-bg-hover: #282828;
     --btn-primary-color-hover: #ffffff;
 }
+
+.modal-primary {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    box-shadow: 5px 5px 20px black;
+    border-radius: 5px;
+    padding: 20px;
+}

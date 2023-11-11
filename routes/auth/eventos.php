@@ -8,4 +8,7 @@ Route::middleware('auth')
     ->prefix('admin')
     ->group(function () {
         Route::resource('eventos', EventosController::class);
+
+        Route::put('evento/alterar-status/{id}', [EventosController::class, 'alterarStatus'])
+            ->name('eventos.alterar-status');
     });
