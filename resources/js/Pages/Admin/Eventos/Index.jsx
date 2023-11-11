@@ -13,15 +13,13 @@ export default function ({eventos}) {
         <LayoutAdmin menu="eventos">
             <section className="mb-4">
                 <div className="row justify-content-between">
-                    <div className="col-auto">
-                        <TextField label="Pesquisar"/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-auto">
+                    <div className="col-auto pt-2">
                         <a href={route('admin.eventos.create')} className="btn btn-primary">
                             Cadastrar Evento
                         </a>
+                    </div>
+                    <div className="col-auto">
+                        <TextField label="Pesquisar"/>
                     </div>
                 </div>
             </section>

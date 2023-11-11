@@ -29,7 +29,9 @@ class EventosController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Eventos/Create');
+        $status = (new GaleriasStatus())->status();
+
+        return Inertia::render('Admin/Eventos/Create', compact('status'));
     }
 
     public function store(Request $request)

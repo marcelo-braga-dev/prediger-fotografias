@@ -5,7 +5,7 @@ import SelectEstados from "@/Components/Inputs/SelectEstados.jsx";
 import {useForm} from "@inertiajs/react";
 import {MuiFileInput} from "mui-file-input";
 
-export default function () {
+export default function ({status}) {
     const {data, setData, post} = useForm()
     const submit = (e) => {
         e.preventDefault()
@@ -29,6 +29,17 @@ export default function () {
                     </div>
                     <div className="col">
                         <SelectEstados setData={setData}/>
+                    </div>
+
+                    <div className="col-md-2 mb-4">
+                        <TextField select label="Status" defaultValue="" fullWidth required
+                                   onChange={e => setData('status', e.target.value)}>
+                            {status.map((item) => (
+                                <MenuItem key={item.status} value={item.status}>
+                                    {item.nome}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                     </div>
                     <div className="col">
                         <MuiFileInput fullWidth label="Selecionar Logo" value={data?.logo}
