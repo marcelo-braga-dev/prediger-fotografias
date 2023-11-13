@@ -58,8 +58,9 @@ export default function Galeria({arquivos}) {
 
     const excluirArquivo = () => {
         router.post(route('admin.galerias-arquivos.destroy', idArquivoExcluir), {
-            _method: 'delete'
-        })
+                _method: 'delete',
+            },
+            {preserveScroll: true})
         handleClose(false)
         setIdArquivoExcluir(undefined)
     };
