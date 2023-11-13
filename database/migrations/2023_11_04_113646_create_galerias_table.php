@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('senha');
             $table->string('token');
             $table->string('capa')->nullable();
-            $table->string('descricao')->nullable();
+            $table->text('descricao')->nullable();
             $table->string('status', 16);
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nome');
             $table->string('status', 32);
-            $table->string('descricao')->nullable();
+            $table->text('descricao')->nullable();
             $table->string('cidade');
             $table->string('estado');
             $table->string('logo')->nullable();

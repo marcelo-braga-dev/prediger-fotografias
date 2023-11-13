@@ -15,10 +15,9 @@ import {Box, useMediaQuery} from "@mui/material";
 import Modal from "@mui/material/Modal";
 import {useTheme} from "@mui/material/styles";
 
-
 const Lightbox = ({imageUrl, onClose, tipoArquivo}) => {
     return (
-        <div className="lightbox-overlay" onClick={onClose}>{console.log(tipoArquivo)}
+        <div className="lightbox-overlay" onClick={onClose}>
             <div className="lightbox-content">
                 {tipoArquivo === 'imagem' && <>
                     <img src={imageUrl} alt="Imagem"/>

@@ -16,16 +16,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 import UploadOutlinedIcon from '@mui/icons-material/UploadOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 
 import {covertDataNumber, covertTamanhoArquivo} from "@/helpers/conversoes.js";
 import {verificaTipoArquivo} from "@/helpers/dados.js";
 
-import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
 
-let qtd = 0
 export default function Pastas({galeria, pastas}) {
     const {setData, data, post} = useForm({
         galeria_id: galeria.id,
@@ -36,6 +36,8 @@ export default function Pastas({galeria, pastas}) {
     const [btnNovaPasta, setBtnNovaPasta] = useState(false);
     const [btnUpload, setBtnUpload] = useState(false);
     const [open, setOpen] = React.useState(false);
+    const [indUp, setIndUp] = React.useState(undefined);
+    const [progresso, setProgresso] = React.useState(0);
 
     // async function submit() {
     //     router.post(route('admin.galerias.upload', galeria.id),
@@ -71,25 +73,35 @@ export default function Pastas({galeria, pastas}) {
     };
 
     const uploadFile = async (file) => {
-        try {
-            await axios.post(route('admin.galerias.upload', galeria.id),
-                {arquivo: file, id_pasta: pastas.atual}, {
+            try {
+                const data = {arquivo: file, id_pasta: pastas.atual};
+                const config = {
+                    onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
+
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                    },
-                }).then(res => {
+                    }
+                }
 
-            })
-        } catch (error) {
-            console.error('Erro durante o upload:', error);
+                await axios.post(route('admin.galerias.upload', galeria.id),
+                    data, config
+                ).then(res => {
+
+                })
+            } catch
+                (error) {
+                console.error('Erro durante o upload:', error);
+            }
         }
-    };
+    ;
 
     const startUpload = async () => {
         setOpen(true);
         for (let i = 0; i < files.length; i++) {
+            setIndUp(i)
             await uploadFile(files[i]);
         }
+
         setOpen(false);
         window.location.reload()
         console.log('Todos os arquivos foram carregados com sucesso!');
@@ -193,7 +205,7 @@ export default function Pastas({galeria, pastas}) {
                                     </button>
                                 </div>
                                 <div className="col">
-                                    {open && <CircularProgress/>}
+                                    {open && <CircularProgress size={30}/>}
                                 </div>
                             </div>
                             {/*</form>*/}
@@ -203,28 +215,32 @@ export default function Pastas({galeria, pastas}) {
                     <div className="row">
                         <div className="col">
                             <List>
-                                {Object.keys(data.arquivos ?? []).map((item, index) => {
-                                    const file = data.arquivos[item]
+                                {files.map((item, index) => {
                                     return (
                                         <ListItem key={index}
-                                                  secondaryAction={
-                                                      <IconButton edge="end" aria-label="delete">
-                                                          <DeleteIcon/>
-                                                      </IconButton>
-                                                  }
+                                            // secondaryAction={
+                                            //     <IconButton edge="end" aria-label="delete">
+                                            //         <DeleteIcon/>
+                                            //     </IconButton>
+                                            // }
                                         >
                                             <ListItemAvatar>
-                                                <Avatar>
-                                                    {verificaTipoArquivo(file.name)}
-                                                </Avatar>
+                                                {indUp === undefined ? <HourglassEmptyOutlinedIcon/> : ''}
+                                                {indUp < index ? <HourglassEmptyOutlinedIcon/> : ''}
+                                                {indUp === index ? <CircularProgress size={25}
+                                                                                     variant={progresso < 100 ? 'determinate' : undefined}
+                                                                                     value={progresso}/> : ''}
+                                                {indUp > index ? <CheckOutlinedIcon color="success"/> : ''}
+
+
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={file.name}
+                                                primary={item.name}
                                                 secondary={<>
                                                     <span className="me-4">
-                                                        {covertDataNumber(file.lastModified)}
+                                                        {covertDataNumber(item.lastModified)}
                                                     </span>
-                                                    <span className="me-4">{covertTamanhoArquivo(file.size)}</span>
+                                                    <span className="me-4">{covertTamanhoArquivo(item.size)}</span>
                                                 </>
                                                 }
                                             />
