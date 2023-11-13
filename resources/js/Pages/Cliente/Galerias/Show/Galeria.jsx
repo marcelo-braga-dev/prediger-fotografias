@@ -78,12 +78,12 @@ export default function Galeria({arquivos}) {
             </div>
             : 'Não há arquivos nessa pasta.'}
 
-        <ImageList sx={{minHeight: 500}} rowHeight={100} gap={8} cols={matchDownMD ? 1 : 3}>
+        <ImageList sx={{minHeight: 500}} gap={8} cols={matchDownMD ? 1 : 3}>
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
                                    className={valueObject[item.nome] ? "border-2 border-success" : ''}
-                                   >
+                    >
                         {item.tipo === 'imagem' &&
                             <img
                                 srcSet={`${item.url_miniatura_marca}?w=348&fit=crop&auto=format&dpr=2 2x`}
@@ -111,7 +111,7 @@ export default function Galeria({arquivos}) {
                             position="top"
                             actionIcon={<>
                                 {item.tipo !== 'video' && <IconButton sx={{color: 'white'}}
-                                             onClick={() => openLightbox(item.url_comprimida_marca)}>
+                                                                      onClick={() => openLightbox(item.url_comprimida_marca)}>
                                     <VisibilityOutlinedIcon/>
                                 </IconButton>}
                                 {lightboxOpen && (
