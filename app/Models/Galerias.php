@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\Files\UploadFilesService;
+use App\Services\Files\UploadImagensManipular;
 use App\src\Galerias\Status\GaleriasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,7 @@ class Galerias extends Model
 
     public function create($dados)
     {
-        $url = (new UploadFilesService())->armazenarMultiplos($dados['capa'], "galerias/capas");
+        $url = (new UploadImagensManipular())->originalComprimida($dados['capa'], "galerias/capas");
 
         $galeria = $this->newQuery()
             ->create([

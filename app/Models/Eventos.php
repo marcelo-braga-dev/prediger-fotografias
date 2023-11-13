@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\Files\UploadFilesService;
+use App\Services\Files\UploadImagensManipular;
 use App\src\Galerias\Status\GaleriasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +38,7 @@ class Eventos extends Model
 
     public function create($dados)
     {
-        $url = (new UploadFilesService())->armazenarMultiplos($dados->logo, 'eventos/logos');
+        $url = (new UploadImagensManipular())->originalComprimida($dados->logo, 'eventos/logos');
 
         $this->newQuery()
             ->create([
