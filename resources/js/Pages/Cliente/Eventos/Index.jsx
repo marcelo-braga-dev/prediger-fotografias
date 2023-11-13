@@ -10,8 +10,8 @@ export default function ({eventos}) {
     return (
         <LayoutCliente>
             <div className="row justify-content-between">
-                <div className="col-auto pt-4">
-                    <h5>Eventos</h5>
+                <div className="col-auto pt-4 mb-0">
+                    <h6>Eventos</h6>
                 </div>
                 {/*<div className="col-auto">*/}
                 {/*    <TextField label="Pesquisar..."/>*/}

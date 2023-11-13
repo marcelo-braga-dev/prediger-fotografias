@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Eventos;
 use App\Models\Galerias;
 use App\Models\GaleriasArquivos;
-use App\Models\GaleriasConteudos;
 use App\Models\GaleriasPastas;
 use App\Services\Files\TipoArquivoService;
-use App\Services\Files\UploadFilesService;
 use App\Services\Files\UploadImagensManipular;
 use App\Services\Files\UploadVideosService;
 use App\src\Galerias\Status\GaleriasStatus;
@@ -63,20 +61,27 @@ class GaleriasController extends Controller
 
     public function upload($id, Request $request)
     {
+        $arquivo = $request->arquivo;
+        $nomeArquivo = (explode('.', $arquivo->getClientOriginalName()))[0];
+
         $classTipoArquivo = (new TipoArquivoService());
-        $tipoArquivo = $classTipoArquivo->verificarMime($request->arquivo->getClientMimeType());
+        $tipoArquivo = $classTipoArquivo->verificarMime($arquivo->getClientMimeType());
 
         if ($tipoArquivo == $classTipoArquivo->getImagem()) {
-            $urls = (new UploadImagensManipular())->todos($request->arquivo, "galerias/$id");
+            $urls = (new UploadImagensManipular())->todos($arquivo, "galerias/$id");
 
-            (new GaleriasArquivos())->create($id, $request['id_pasta'], $urls, $classTipoArquivo->getImagem());
+            (new GaleriasArquivos())->create(
+                $id, $request['id_pasta'], $urls, $classTipoArquivo->getImagem(), $nomeArquivo
+            );
         }
 
         if ($tipoArquivo == $classTipoArquivo->getVideo()) {
 
-            $urls = (new UploadVideosService())->todos($request->arquivo, "galerias/$id");
+            $urls = (new UploadVideosService())->todos($arquivo, "galerias/$id");
 
-            (new GaleriasArquivos())->create($id, $request['id_pasta'], $urls, $classTipoArquivo->getVideo());
+            (new GaleriasArquivos())->create(
+                $id, $request['id_pasta'], $urls, $classTipoArquivo->getVideo(), $nomeArquivo
+            );
         }
 
         modalSucesso('Arquivos armazenados com sucesso!');

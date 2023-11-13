@@ -47,6 +47,11 @@ class UploadImagesApp
 
         $img = Image::make($file->getContent());
         $img->opacity(50);
+//        $img->resize(130, 100);
+//        $img->fit(130, 100);
+//        $img->resizeCanvas(150, 150);
+//        $img->heighten(150);
+        $img->widen(130);
 
         $nameFile = 'marcadagua.png';
         $dirFile = $path . '/' . $nameFile;

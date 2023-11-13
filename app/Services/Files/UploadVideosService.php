@@ -68,12 +68,13 @@ class UploadVideosService
         $dirFile = $path . '/' . $nameFile;
 
         $video = $this->ffmpeg->open($file);
+
         $video->filters()
             ->pad(new Dimension(170, 280))
             ->watermark(Storage::path('app/marcadagua.png'), [
                 'position' => 'relative',
-                'bottom' => 90,
-                'right' => 5,
+                'top' => 90,
+                'right' => 20,
             ])
             ->synchronize();
 

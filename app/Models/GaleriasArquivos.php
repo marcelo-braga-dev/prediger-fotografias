@@ -15,6 +15,7 @@ class GaleriasArquivos extends Model
     protected $fillable = [
         'galerias_id',
         'pasta',
+        'nome',
         'url_original',
         'url_comprimida',
         'url_comprimida_marca',
@@ -23,11 +24,12 @@ class GaleriasArquivos extends Model
         'tipo',
     ];
 
-    public function create($idGaleria, $pasta, $urls, $tipo)
+    public function create($idGaleria, $pasta, $urls, $tipo, $nome)
     {
         $this->newQuery()
             ->create([
                 'galerias_id' => $idGaleria,
+                'nome' => $nome,
                 'pasta' => $pasta,
                 'url_original' => $urls[TipoArquivoService::URL_ORIGINAL],
                 'url_comprimida' => $urls[TipoArquivoService::URL_COMPRIMIDA] ?? null,
@@ -45,10 +47,12 @@ class GaleriasArquivos extends Model
         return $this->newQuery()
             ->where('galerias_id', $id)
             ->where('pasta', $pasta)
+            ->orderByDesc('id')
             ->get()
             ->transform(function ($item) {
                 return [
                     'id' => $item->id,
+                    'nome' => $item->nome ?? '',
                     'url_original' => asset('storage/' . $item->url_original),
                     'url_comprimida' => asset('storage/' . $item->url_comprimida),
                     'url_comprimida_marca' => asset('storage/' . $item->url_comprimida_marca),

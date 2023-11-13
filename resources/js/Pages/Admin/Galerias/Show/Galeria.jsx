@@ -5,23 +5,36 @@ import IconButton from "@mui/material/IconButton";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import React, {useEffect, useState} from "react";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
+
 import {router} from "@inertiajs/react";
 import {Box, useMediaQuery} from "@mui/material";
 import Modal from "@mui/material/Modal";
 import {useTheme} from "@mui/material/styles";
 
 
-const Lightbox = ({imageUrl, onClose}) => {
+const Lightbox = ({imageUrl, onClose, tipoArquivo}) => {
     return (
-        <div className="lightbox-overlay" onClick={onClose}>
+        <div className="lightbox-overlay" onClick={onClose}>{console.log(tipoArquivo)}
             <div className="lightbox-content">
-                <img src={imageUrl} alt="Imagem"/>
-                <button onClick={onClose} className="close-button">
-                    Fechar
-                </button>
+                {tipoArquivo === 'imagem' && <>
+                    <img src={imageUrl} alt="Imagem"/>
+                    <button onClick={onClose} className="close-button">
+                        Fechar
+                    </button>
+                </>}
+                {tipoArquivo === 'video' && <>
+                    <video controls muted preload="metadata">
+                        <source src={imageUrl} type="video/mp4"/>
+                        <source src={imageUrl} type="video/ogg"/>
+                    </video>
+                    <button onClick={onClose} className="close-button">
+                        Fechar
+                    </button>
+                </>}
             </div>
         </div>
     );
@@ -34,6 +47,7 @@ export default function Galeria({arquivos}) {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [urlImage, setUrlImage] = useState('');
     const [idArquivoExcluir, setIdArquivoExcluir] = useState();
+    const [tipoArquivo, setTipoArquivo] = useState('');
 
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -51,8 +65,9 @@ export default function Galeria({arquivos}) {
         setIdArquivoExcluir(undefined)
     };
 
-    const openLightbox = (url) => {
+    const openLightbox = (url, tipo) => {
         setUrlImage(url)
+        setTipoArquivo(tipo)
         setLightboxOpen(true);
     };
 
@@ -100,14 +115,14 @@ export default function Galeria({arquivos}) {
             </div>
             : 'Não há arquivos nessa pasta.'}
 
-        <ImageList sx={{minHeight: 500}} rowHeight={150} gap={8} cols={matchDownMD ? 1 : 4}>
+        <ImageList sx={{minHeight: 500}} rowHeight={150} gap={8} cols={matchDownMD ? 1 : 3}>
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
-                                   className={valueObject[item.id] ? "border-4 border-success bg-dark" : ''}>
+                                   className={valueObject[item.nome] ? "border-2 border-success bg-dark" : ''}>
                         {item.tipo === 'imagem' &&
                             <img
-                                onClick={() => setInputValue(item.id)}
+                                onClick={() => setInputValue(item.nome)}
                                 srcSet={`${item.url_miniatura}?w=348&fit=crop&auto=format&dpr=2 2x`}
                                 src={`${item.url_miniatura}?w=348&fit=crop&auto=format`}
                                 alt={item.title}
@@ -117,7 +132,7 @@ export default function Galeria({arquivos}) {
 
                         {item.tipo === 'video' &&
                             <video controls muted preload="metadata"
-                                   onClick={() => setInputValue(item.id)}>
+                                   onClick={() => setInputValue(item.nome)}>
                                 <source src={item.url_miniatura} type="video/mp4"/>
                                 <source src={item.url_miniatura} type="video/ogg"/>
                             </video>}
@@ -125,28 +140,62 @@ export default function Galeria({arquivos}) {
                         <ImageListItemBar
                             sx={{
                                 background:
-                                    'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                                    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                                    'linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, ' +
+                                    'rgba(0,0,0,0.3) 80%, rgba(0,0,0,0.3) 100%)',
                             }}
-                            // title={item.title}
-                            title={'ID: ' + item.id}
+
+                            title={<small className="d-block">ID: {item.nome}</small>}
                             position="top"
                             actionIcon={<>
-                                <IconButton sx={{color: 'white'}}
-                                            onClick={() => excluirArquivoModal(item.id)}>
-                                    <DeleteOutlineOutlinedIcon/>
-                                </IconButton>
-                                {item.tipo !== 'video' && <IconButton sx={{color: 'white'}}
-                                                                      onClick={() => openLightbox(item.url_comprimida)}>
-                                    <VisibilityOutlinedIcon/>
-                                </IconButton>}
-                                {lightboxOpen && (
-                                    <Lightbox imageUrl={urlImage} onClose={closeLightbox}/>
-                                )}
-                                <IconButton sx={{color: 'white'}}
-                                            onClick={() => setInputValue(item.id)}>
-                                    {valueObject[item.id] ? <StarIcon/> : <StarBorderIcon/>}
-                                </IconButton>
+                                <div className="row">
+                                    <div className="col mb-0">
+                                        {item.tipo === 'video' && <>
+                                            <IconButton sx={{color: 'white'}}
+                                                        onClick={() => openLightbox(item.url_miniatura, item.tipo)}>
+                                                <VisibilityOutlinedIcon fontSize="small"/>
+                                            </IconButton>
+                                            {lightboxOpen && (
+                                                <Lightbox imageUrl={urlImage} onClose={closeLightbox}
+                                                          tipoArquivo={tipoArquivo}/>
+                                            )}
+                                        </>}
+                                        {item.tipo === 'imagem' && <>
+                                            <IconButton sx={{color: 'white'}}
+                                                        onClick={() => openLightbox(item.url_comprimida, item.tipo)}>
+                                                <VisibilityOutlinedIcon fontSize="small"/>
+                                            </IconButton>
+                                        </>}
+                                        <IconButton sx={{color: 'white'}}
+                                                    onClick={() => setInputValue(item.nome)}>
+                                            {valueObject[item.nome] ? <StarIcon fontSize="small"/> :
+                                                <StarBorderIcon fontSize="small"/>}
+                                        </IconButton>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col mb-0">
+                                        {item.tipo === 'video' && <>
+                                            <IconButton sx={{color: 'white'}}
+                                                        onClick={() =>
+                                                            openLightbox(item.url_miniatura_marca, item.tipo)}>
+                                                <WaterDropOutlinedIcon fontSize="small"/>
+                                            </IconButton>
+                                        </>}
+                                        {item.tipo === 'imagem' && <>
+                                            <IconButton sx={{color: 'white'}}
+                                                        onClick={() =>
+                                                            openLightbox(item.url_comprimida_marca, item.tipo)}>
+                                                <WaterDropOutlinedIcon fontSize="small"/>
+                                            </IconButton>
+
+                                        </>}
+                                        <IconButton sx={{color: 'white'}} className="m-0 p-0"
+                                                    onClick={() => excluirArquivoModal(item.id)}>
+                                            <DeleteOutlineOutlinedIcon fontSize="small"/>
+                                        </IconButton>
+
+                                    </div>
+                                </div>
                             </>
                             }
                             actionPosition="right"

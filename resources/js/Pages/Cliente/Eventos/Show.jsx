@@ -5,7 +5,6 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import StatusIcons from "@/Components/Partials/StatusIcons.jsx";
 import * as React from "react";
 
 export default function ({evento, galerias}) {
@@ -58,9 +57,6 @@ export default function ({evento, galerias}) {
                                     <div className="row ms-3" style={{width: '100%'}}>
                                         <div className="col-12"><h6>{item.titulo}</h6></div>
                                         <div className="col-md-3 text-muted">{item.data}</div>
-                                        <div className="col-md-3">
-                                            <StatusIcons status={item.status}/>
-                                        </div>
                                     </div>
                                 </ListItem>
                             </ListItemButton>

@@ -7,6 +7,8 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import React, {useEffect, useState} from "react";
+import {useTheme} from "@mui/material/styles";
+import {useMediaQuery} from "@mui/material";
 
 const Lightbox = ({imageUrl, onClose}) => {
     return (
@@ -27,6 +29,9 @@ export default function Galeria({arquivos}) {
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [urlImage, setUrlImage] = useState('');
+
+    const theme = useTheme();
+    const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
     const openLightbox = (url) => {
         setUrlImage(url)
@@ -73,11 +78,11 @@ export default function Galeria({arquivos}) {
             </div>
             : 'Não há arquivos nessa pasta.'}
 
-        <ImageList sx={{minHeight: 500}} rowHeight={100} gap={8} cols={4}>
+        <ImageList sx={{minHeight: 500}} rowHeight={100} gap={8} cols={matchDownMD ? 1 : 3}>
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
-                                   className={valueObject[item.id] ? "border-4 border-success" : ''}
+                                   className={valueObject[item.nome] ? "border-2 border-success" : ''}
                                    >
                         {item.tipo === 'imagem' &&
                             <img
@@ -85,12 +90,12 @@ export default function Galeria({arquivos}) {
                                 src={`${item.url_miniatura_marca}?w=348&fit=crop&auto=format`}
                                 alt={item.title}
                                 loading="lazy"
-                                onClick={() => setInputValue(item.id)}
+                                onClick={() => setInputValue(item.nome)}
                             />}
 
                         {item.tipo === 'video' &&
                             <video controls muted
-                                   onClick={() => setInputValue(item.id)}>
+                                   onClick={() => setInputValue(item.nome)}>
                                 <source src={item.url_miniatura_marca} type="video/mp4"/>
                                 <source src={item.url_miniatura_marca} type="video/ogg"/>
                             </video>}
@@ -102,7 +107,7 @@ export default function Galeria({arquivos}) {
                                     'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
                             }}
                             // title={item.title}
-                            title={'ID: ' + item.id}
+                            title={<small>ID: {item.nome}</small>}
                             position="top"
                             actionIcon={<>
                                 {item.tipo !== 'video' && <IconButton sx={{color: 'white'}}
@@ -113,8 +118,8 @@ export default function Galeria({arquivos}) {
                                     <Lightbox imageUrl={urlImage} onClose={closeLightbox}/>
                                 )}
                                 <IconButton sx={{color: 'white'}}
-                                            onClick={() => setInputValue(item.id)}>
-                                    {valueObject[item.id] ? <StarIcon/> : <StarBorderIcon/>}
+                                            onClick={() => setInputValue(item.nome)}>
+                                    {valueObject[item.nome] ? <StarIcon/> : <StarBorderIcon/>}
                                 </IconButton>
                             </>
                             }

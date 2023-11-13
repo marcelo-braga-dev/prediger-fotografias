@@ -64,7 +64,9 @@ export default function MenuPrincipal() {
     return (<>
             <div className="row justify-content-between w-100">
                 <div className="col-auto mb-0">
-                    <img className="" alt="logo" style={{maxWidth: 150}} src="/storage/app/logo_cliente.png"/>
+                    <a href="/">
+                        <img className="" alt="logo" style={{maxWidth: 150}} src="/storage/app/logo_cliente.png"/>
+                    </a>
                 </div>
                 <div className="col-auto d-md-none mb-0 align-items-center">
                     <IconButton
