@@ -37,17 +37,17 @@ export default function Pastas({galeria, pastas}) {
     const [btnUpload, setBtnUpload] = useState(false);
     const [open, setOpen] = React.useState(false);
 
-    async function submit() {
-        router.post(route('admin.galerias.upload', galeria.id),
-            {arquivo: files[0], id_pasta: pastas.atual, _method: 'post'})
-        setOpen(true);
-    }
-
-    router.on('success', (event) => {
-        data.arquivos = {}
-        setBtnUpload(false)
-        setOpen(false);
-    })
+    // async function submit() {
+    //     router.post(route('admin.galerias.upload', galeria.id),
+    //         {arquivo: files[0], id_pasta: pastas.atual, _method: 'post'})
+    //     setOpen(true);
+    // }
+    //
+    // router.on('success', (event) => {
+    //     data.arquivos = {}
+    //     setBtnUpload(false)
+    //     setOpen(false);
+    // })
 
     const criarPasta = (e) => {
         e.preventDefault()
@@ -98,7 +98,7 @@ export default function Pastas({galeria, pastas}) {
 
     return (
         <section>
-            <button onClick={() => submit()}>SUBMIT</button>
+            {/*<button onClick={() => submit()}>SUBMIT</button>*/}
             {/*Menu Superior*/}
             <div className="row">
                 <div className="col-md-2 mb-0"><h6>Galeria</h6></div>
