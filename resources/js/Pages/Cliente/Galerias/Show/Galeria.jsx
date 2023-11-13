@@ -10,14 +10,25 @@ import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {useMediaQuery} from "@mui/material";
 
-const Lightbox = ({imageUrl, onClose}) => {
+const Lightbox = ({imageUrl, onClose, tipoArquivo}) => {
     return (
         <div className="lightbox-overlay" onClick={onClose}>
             <div className="lightbox-content">
-                <img src={imageUrl} alt="Imagem"/>
-                <button onClick={onClose} className="close-button">
-                    Fechar
-                </button>
+                {tipoArquivo === 'imagem' && <>
+                    <img src={imageUrl} alt="Imagem"/>
+                    <button onClick={onClose} className="close-button">
+                        Fechar
+                    </button>
+                </>}
+                {tipoArquivo === 'video' && <>
+                    <video controls muted preload="metadata">
+                        <source src={imageUrl} type="video/mp4"/>
+                        <source src={imageUrl} type="video/ogg"/>
+                    </video>
+                    <button onClick={onClose} className="close-button">
+                        Fechar
+                    </button>
+                </>}
             </div>
         </div>
     );
@@ -29,12 +40,14 @@ export default function Galeria({arquivos}) {
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [urlImage, setUrlImage] = useState('');
+    const [tipoArquivo, setTipoArquivo] = useState('');
 
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
-    const openLightbox = (url) => {
+    const openLightbox = (url, tipo) => {
         setUrlImage(url)
+        setTipoArquivo(tipo)
         setLightboxOpen(true);
     };
 
@@ -72,8 +85,8 @@ export default function Galeria({arquivos}) {
                         <span className="ms-2" key={value}> ID: {value},</span>
                     ))}
                     <span className="ms-2">
-                                {(Object.values(valueObject)).length > 0 ? '' : 'Nenhum'}
-                            </span>
+                        {(Object.values(valueObject)).length > 0 ? '' : 'Nenhum'}
+                    </span>
                 </div>
             </div>
             : 'Não há arquivos nessa pasta.'}
@@ -110,12 +123,21 @@ export default function Galeria({arquivos}) {
                             title={<small>ID: {item.nome}</small>}
                             position="top"
                             actionIcon={<>
-                                {item.tipo !== 'video' && <IconButton sx={{color: 'white'}}
-                                                                      onClick={() => openLightbox(item.url_comprimida_marca)}>
-                                    <VisibilityOutlinedIcon/>
-                                </IconButton>}
+                                {item.tipo === 'imagem' &&
+                                    <IconButton sx={{color: 'white'}}
+                                                onClick={() => openLightbox(item.url_comprimida_marca, item.tipo)}>
+                                        <VisibilityOutlinedIcon/>
+                                    </IconButton>
+                                }
+                                {item.tipo === 'video' &&
+                                    <IconButton sx={{color: 'white'}}
+                                                onClick={() => openLightbox(item.url_miniatura_marca, item.tipo)}>
+                                        <VisibilityOutlinedIcon/>
+                                    </IconButton>
+                                }
                                 {lightboxOpen && (
-                                    <Lightbox imageUrl={urlImage} onClose={closeLightbox}/>
+                                    <Lightbox imageUrl={urlImage} onClose={closeLightbox}
+                                              tipoArquivo={tipoArquivo}/>
                                 )}
                                 <IconButton sx={{color: 'white'}}
                                             onClick={() => setInputValue(item.nome)}>

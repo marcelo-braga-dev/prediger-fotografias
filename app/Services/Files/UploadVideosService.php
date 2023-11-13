@@ -70,11 +70,11 @@ class UploadVideosService
         $video = $this->ffmpeg->open($file);
 
         $video->filters()
-            ->pad(new Dimension(170, 280))
-            ->watermark(Storage::path('app/marcadagua.png'), [
+            ->pad(new Dimension(320, 480))
+            ->watermark(Storage::path('app/marcadagua_x150.png'), [
                 'position' => 'relative',
-                'top' => 90,
-                'right' => 20,
+                'top' => 200,
+                'right' => 95,
             ])
             ->synchronize();
 

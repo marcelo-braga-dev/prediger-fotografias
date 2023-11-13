@@ -46,17 +46,18 @@ class UploadImagesApp
         $diretorio = Storage::path($path);
 
         $img = Image::make($file->getContent());
-        $img->opacity(50);
-//        $img->resize(130, 100);
-//        $img->fit(130, 100);
-//        $img->resizeCanvas(150, 150);
-//        $img->heighten(150);
-        $img->widen(130);
+        $img->opacity(70);
 
-        $nameFile = 'marcadagua.png';
-        $dirFile = $path . '/' . $nameFile;
+        $img->widen(500);
+        $nameFileM = 'marcadagua_x500.png';
+        $dirFile = $path . '/' . $nameFileM;
 
-        $img->save($diretorio . '/' . $nameFile, 70);
+        $img->save($diretorio . '/' . $nameFileM, 90);
+
+        $img->widen(150);
+        $nameFileP = 'marcadagua_x150.png';
+        $dirFile = $path . '/' . $nameFileP;
+        $img->save($diretorio . '/' . $nameFileP, 90);
 
         return $dirFile;
     }

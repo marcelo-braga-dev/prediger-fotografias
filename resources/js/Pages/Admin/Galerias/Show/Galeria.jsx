@@ -153,10 +153,6 @@ export default function Galeria({arquivos}) {
                                                         onClick={() => openLightbox(item.url_miniatura, item.tipo)}>
                                                 <VisibilityOutlinedIcon fontSize="small"/>
                                             </IconButton>
-                                            {lightboxOpen && (
-                                                <Lightbox imageUrl={urlImage} onClose={closeLightbox}
-                                                          tipoArquivo={tipoArquivo}/>
-                                            )}
                                         </>}
                                         {item.tipo === 'imagem' && <>
                                             <IconButton sx={{color: 'white'}}
@@ -203,6 +199,11 @@ export default function Galeria({arquivos}) {
                 );
             })}
         </ImageList>
+
+        {lightboxOpen && (
+            <Lightbox imageUrl={urlImage} onClose={closeLightbox}
+                      tipoArquivo={tipoArquivo}/>
+        )}
 
         <Modal
             open={open}

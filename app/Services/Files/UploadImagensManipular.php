@@ -33,22 +33,15 @@ class UploadImagensManipular
         $path = rtrim($path, '/');
         Storage::makeDirectory($path);
         $diretorio = Storage::path($path);
-
         $nameFile = Str::random(40) . '.jpg';
-
         $dirFile = $path . '/' . $nameFile;
 
         $img = Image::make($file->getContent());
-        $largura = $img->getWidth();
-        $altura = $img->getHeight();
+        $img->widen(250);
 
-        $watermark = Image::make(Storage::path('') . 'app/marcadagua.png');
-        $marcaAltura = $watermark->getHeight();
-        $x = $altura / $marcaAltura * $largura;
-//        $watermark->resize($x * 0.7, $marcaAltura * 0.7);
-
+        $watermark = Image::make(Storage::path('') . 'app/marcadagua_x150.png');
         $img->insert($watermark, 'center');
-        $img->resize(150, 100);
+
         $img->save($diretorio . '/' . $nameFile, 50);
 
         return $dirFile;
@@ -65,7 +58,7 @@ class UploadImagensManipular
         $dirFile = $path . '/' . $nameFile;
 
         $img = Image::make($file->getContent());
-        $img->resize(150, 100);
+        $img->widen(150);
         $img->save($diretorio . '/' . $nameFile, 50);
 
         return $dirFile;
@@ -78,17 +71,13 @@ class UploadImagensManipular
         $diretorio = Storage::path($path);
 
         $nameFile = Str::random(40) . '.jpg';
-
         $dirFile = $path . '/' . $nameFile;
 
         $img = Image::make($file->getContent());
-        $largura = $img->getWidth();
-        $altura = $img->getHeight();
+        $img->widen(800);
 
-        $watermark = Image::make(Storage::path('') . 'app/marcadagua.png');
-        $marcaAltura = $watermark->getHeight();
-        $x = $altura / $marcaAltura * $largura;
-//        $watermark->resize($x * 0.7, $marcaAltura * 0.7);
+        $watermark = Image::make(Storage::path('') . 'app/marcadagua_x500.png');
+        $watermark->widen(300);
 
         $img->insert($watermark, 'center');
         $img->save($diretorio . '/' . $nameFile, 50);
@@ -107,6 +96,7 @@ class UploadImagensManipular
         $dirFile = $path . '/' . $nameFile;
 
         $img = Image::make($file->getContent());
+        $img->widen(800);
         $img->save($diretorio . '/' . $nameFile, 50);
 
         return $dirFile;
