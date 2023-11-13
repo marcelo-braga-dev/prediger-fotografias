@@ -23,6 +23,9 @@ import {verificaTipoArquivo} from "@/helpers/dados.js";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import axios from 'axios';
+
+let qtd = 0
 export default function Pastas({galeria, pastas}) {
     const {setData, data, post} = useForm({
         galeria_id: galeria.id,
@@ -30,22 +33,21 @@ export default function Pastas({galeria, pastas}) {
         arquivos: []
     })
 
-    const [btnNovaPasta, setBtnNovaPasta] = useState(false)
-    const [btnUpload, setBtnUpload] = useState(false)
+    const [btnNovaPasta, setBtnNovaPasta] = useState(false);
+    const [btnUpload, setBtnUpload] = useState(false);
+    const [open, setOpen] = React.useState(false);
 
-    async function submit(e) {
-        e.preventDefault()
-        router.post(route('admin.galerias.upload', galeria.id),
-            {_method: 'put', ...data,})
-
-        setOpen(true);
-    }
-
-    router.on('success', (event) => {
-        data.arquivos = {}
-        setBtnUpload(false)
-        setOpen(false);
-    })
+    // async function submit() {
+    //     router.post(route('admin.galerias.upload', galeria.id),
+    //         {arquivo: files[0], id_pasta: pastas.atual, _method: 'post'})
+    //     setOpen(true);
+    // }
+    //
+    // router.on('success', (event) => {
+    //     data.arquivos = {}
+    //     setBtnUpload(false)
+    //     setOpen(false);
+    // })
 
     const criarPasta = (e) => {
         e.preventDefault()
@@ -58,19 +60,45 @@ export default function Pastas({galeria, pastas}) {
     const selecionaPasta = (idPasta) => {
         router.get(route('admin.galerias.show', galeria.id), {
             'id_pasta': idPasta,
-        })
+        }, {preserveScroll: true})
     }
 
-    const [open, setOpen] = React.useState(false);
-    const handleClose = () => {
-        setOpen(false);
+    // Upload Multiplo
+    const [files, setFiles] = useState([]);
+
+    const handleFileChange = (e) => {
+        setFiles([...e]);
     };
-    const handleOpen = () => {
+
+    const uploadFile = async (file) => {
+        try {
+            await axios.post(route('admin.galerias.upload', galeria.id),
+                {arquivo: file, id_pasta: pastas.atual}, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }).then(res => {
+
+            })
+        } catch (error) {
+            console.error('Erro durante o upload:', error);
+        }
+    };
+
+    const startUpload = async () => {
         setOpen(true);
+        for (let i = 0; i < files.length; i++) {
+            await uploadFile(files[i]);
+        }
+        setOpen(false);
+        window.location.reload()
+        console.log('Todos os arquivos foram carregados com sucesso!');
     };
+    // Upload Multiplo - fim
 
     return (
         <section>
+            {/*<button onClick={() => submit()}>SUBMIT</button>*/}
             {/*Menu Superior*/}
             <div className="row">
                 <div className="col-md-2 mb-0"><h6>Galeria</h6></div>
@@ -151,22 +179,24 @@ export default function Pastas({galeria, pastas}) {
                                     Selecione os arquivos para a pasta {pastas?.superior_nome ?
                                     <b>{pastas?.superior_nome}</b> : 'inicial'}.
                                 </span>
-                            <form onSubmit={submit}>
-                                <div className="row mt-4">
-                                    <div className="col-md-6">
-                                        <MuiFileInput className="p-2" fullWidth label="Selecionar Arquivos"
-                                                      value={data?.arquivos}
-                                                      multiple
-                                                      onChange={e => setData('arquivos', e)}/>
-                                    </div>
-                                    <div className="col-md-auto pt-2">
-                                        <button className="btn btn-primary">Salvar Arquivos</button>
-                                    </div>
-                                    <div className="col">
-                                        {open && <CircularProgress/>}
-                                    </div>
+                            {/*<form onSubmit={submit}>*/}
+                            <div className="row mt-4">
+                                <div className="col-md-6">
+                                    <MuiFileInput className="p-2" fullWidth label="Selecionar Arquivos"
+                                                  value={files}
+                                                  multiple
+                                                  onChange={handleFileChange}/>
                                 </div>
-                            </form>
+                                <div className="col-md-auto pt-2">
+                                    <button type="button" className="btn btn-primary"
+                                            onClick={startUpload}>Salvar Arquivos
+                                    </button>
+                                </div>
+                                <div className="col">
+                                    {open && <CircularProgress/>}
+                                </div>
+                            </div>
+                            {/*</form>*/}
                         </div>
                     </div>
 

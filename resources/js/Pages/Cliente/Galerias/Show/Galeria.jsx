@@ -91,8 +91,8 @@ export default function Galeria({arquivos}) {
                         {item.tipo === 'video' &&
                             <video controls muted
                                    onClick={() => setInputValue(item.id)}>
-                                <source src={item.url_original} type="video/mp4"/>
-                                <source src={item.url_original} type="video/ogg"/>
+                                <source src={item.url_miniatura_marca} type="video/mp4"/>
+                                <source src={item.url_miniatura_marca} type="video/ogg"/>
                             </video>}
 
                         <ImageListItemBar
@@ -105,10 +105,10 @@ export default function Galeria({arquivos}) {
                             title={'ID: ' + item.id}
                             position="top"
                             actionIcon={<>
-                                <IconButton sx={{color: 'white'}}
-                                            onClick={() => openLightbox(item.url_comprimida_marca)}>
+                                {item.tipo !== 'video' && <IconButton sx={{color: 'white'}}
+                                             onClick={() => openLightbox(item.url_comprimida_marca)}>
                                     <VisibilityOutlinedIcon/>
-                                </IconButton>
+                                </IconButton>}
                                 {lightboxOpen && (
                                     <Lightbox imageUrl={urlImage} onClose={closeLightbox}/>
                                 )}

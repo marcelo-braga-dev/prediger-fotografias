@@ -13,7 +13,7 @@ Route::middleware('auth')
         Route::resource('galerias-pastas', GaleriasPastasController::class);
         Route::resource('galerias-arquivos', GaleriasArquivosController::class);
 
-        Route::put('galeria/upload/{id}', [GaleriasController::class, 'upload'])
+        Route::post('galeria/upload/{id}', [GaleriasController::class, 'upload'])
             ->name('galerias.upload');
 
         Route::put('galeria/alterar-status/{id}', [GaleriasController::class, 'alterarStatus'])

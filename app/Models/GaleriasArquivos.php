@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Files\TipoArquivoService;
 use App\Services\Files\UploadImagensManipular;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,11 +29,11 @@ class GaleriasArquivos extends Model
             ->create([
                 'galerias_id' => $idGaleria,
                 'pasta' => $pasta,
-                'url_original' => $urls[UploadImagensManipular::URL_ORIGINAL],
-                'url_comprimida' => $urls[UploadImagensManipular::URL_COMPRIMIDA] ?? null,
-                'url_comprimida_marca' => $urls[UploadImagensManipular::URL_COMPRIMIDA_MARCA] ?? null,
-                'url_miniatura' => $urls[UploadImagensManipular::URL_MINIATURA] ?? null,
-                'url_miniatura_marca' => $urls[UploadImagensManipular::URL_MINIATURA_MARCA] ?? null,
+                'url_original' => $urls[TipoArquivoService::URL_ORIGINAL],
+                'url_comprimida' => $urls[TipoArquivoService::URL_COMPRIMIDA] ?? null,
+                'url_comprimida_marca' => $urls[TipoArquivoService::URL_COMPRIMIDA_MARCA] ?? null,
+                'url_miniatura' => $urls[TipoArquivoService::URL_MINIATURA] ?? null,
+                'url_miniatura_marca' => $urls[TipoArquivoService::URL_MINIATURA_MARCA] ?? null,
                 'tipo' => $tipo,
             ]);
     }

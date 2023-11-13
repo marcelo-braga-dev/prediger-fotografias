@@ -11,6 +11,7 @@ use App\Models\GaleriasPastas;
 use App\Services\Files\TipoArquivoService;
 use App\Services\Files\UploadFilesService;
 use App\Services\Files\UploadImagensManipular;
+use App\Services\Files\UploadVideosService;
 use App\src\Galerias\Status\GaleriasStatus;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -63,27 +64,23 @@ class GaleriasController extends Controller
     public function upload($id, Request $request)
     {
         $classTipoArquivo = (new TipoArquivoService());
+        $tipoArquivo = $classTipoArquivo->verificarMime($request->arquivo->getClientMimeType());
 
-        if ($request['arquivos']) {
-            foreach ($request['arquivos'] as $file) {
-                $tipoArquivo = $classTipoArquivo->verificarMime($file->getClientMimeType());
+        if ($tipoArquivo == $classTipoArquivo->getImagem()) {
+            $urls = (new UploadImagensManipular())->todos($request->arquivo, "galerias/$id");
 
-                if ($tipoArquivo == $classTipoArquivo->getImagem()) {
-                    $urls = (new UploadImagensManipular())->todos($file, "galerias/$id");
+            (new GaleriasArquivos())->create($id, $request['id_pasta'], $urls, $classTipoArquivo->getImagem());
+        }
 
-                    (new GaleriasArquivos())->create($id, $request['id_pasta'], $urls, $classTipoArquivo->getImagem());
-                }
+        if ($tipoArquivo == $classTipoArquivo->getVideo()) {
 
-                if ($tipoArquivo == $classTipoArquivo->getVideo()) {
-                    $urls[UploadImagensManipular::URL_ORIGINAL] = (new UploadImagensManipular())->original($file, "galerias/$id");
+            $urls = (new UploadVideosService())->todos($request->arquivo, "galerias/$id");
 
-                    (new GaleriasArquivos())->create($id, $request['id_pasta'], $urls, $classTipoArquivo->getVideo());
-                }
-            }
+            (new GaleriasArquivos())->create($id, $request['id_pasta'], $urls, $classTipoArquivo->getVideo());
         }
 
         modalSucesso('Arquivos armazenados com sucesso!');
-        return redirect()->route('admin.galerias.show', [$id, 'id_pasta' => $request['id_pasta']]);
+//        return redirect()->route('admin.galerias.show', [$id, 'id_pasta' => $request['id_pasta']]);
     }
 
     public function destroy($id)

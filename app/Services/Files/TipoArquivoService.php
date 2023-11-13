@@ -6,7 +6,13 @@ class TipoArquivoService
 {
     private string $imagem = 'imagem';
     private string $video = 'video';
-    private string $desconhecido = 'desconhec';
+    private string $desconhecido = 'desconhecido';
+
+    public const URL_ORIGINAL = 0;
+    public const URL_COMPRIMIDA = 1;
+    public const URL_COMPRIMIDA_MARCA = 2;
+    public const URL_MINIATURA = 3;
+    public const URL_MINIATURA_MARCA = 4;
 
     public function verificarMime($mime): string
     {

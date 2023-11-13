@@ -9,8 +9,9 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import {router} from "@inertiajs/react";
-import {Box} from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 import Modal from "@mui/material/Modal";
+import {useTheme} from "@mui/material/styles";
 
 
 const Lightbox = ({imageUrl, onClose}) => {
@@ -33,6 +34,9 @@ export default function Galeria({arquivos}) {
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [urlImage, setUrlImage] = useState('');
     const [idArquivoExcluir, setIdArquivoExcluir] = useState();
+
+    const theme = useTheme();
+    const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
     const excluirArquivoModal = (id) => {
         setIdArquivoExcluir(id)
@@ -96,11 +100,11 @@ export default function Galeria({arquivos}) {
             </div>
             : 'Não há arquivos nessa pasta.'}
 
-        <ImageList sx={{minHeight: 500}} rowHeight={100} gap={8} cols={4}>
+        <ImageList sx={{minHeight: 500}} rowHeight="150" gap={8} cols={matchDownMD ? 1 : 4}>
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
-                                   className={valueObject[item.id] ? "border-4 border-success" : ''}>
+                                   className={valueObject[item.id] ? "border-4 border-success bg-dark" : ''}>
                         {item.tipo === 'imagem' &&
                             <img
                                 onClick={() => setInputValue(item.id)}
@@ -112,9 +116,10 @@ export default function Galeria({arquivos}) {
                             />}
 
                         {item.tipo === 'video' &&
-                            <video controls muted onClick={() => setInputValue(item.id)}>
-                                <source src={item.url_original} type="video/mp4"/>
-                                <source src={item.url_original} type="video/ogg"/>
+                            <video controls muted preload="metadata"
+                                   onClick={() => setInputValue(item.id)}>
+                                <source src={item.url_miniatura} type="video/mp4"/>
+                                <source src={item.url_miniatura} type="video/ogg"/>
                             </video>}
 
                         <ImageListItemBar
@@ -131,10 +136,10 @@ export default function Galeria({arquivos}) {
                                             onClick={() => excluirArquivoModal(item.id)}>
                                     <DeleteOutlineOutlinedIcon/>
                                 </IconButton>
-                                <IconButton sx={{color: 'white'}}
-                                            onClick={() => openLightbox(item.url_comprimida)}>
+                                {item.tipo !== 'video' && <IconButton sx={{color: 'white'}}
+                                                                      onClick={() => openLightbox(item.url_comprimida)}>
                                     <VisibilityOutlinedIcon/>
-                                </IconButton>
+                                </IconButton>}
                                 {lightboxOpen && (
                                     <Lightbox imageUrl={urlImage} onClose={closeLightbox}/>
                                 )}
@@ -150,6 +155,7 @@ export default function Galeria({arquivos}) {
                 );
             })}
         </ImageList>
+
         <Modal
             open={open}
             onClose={handleClose}
