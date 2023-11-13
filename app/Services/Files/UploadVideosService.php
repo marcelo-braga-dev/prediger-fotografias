@@ -52,10 +52,10 @@ class UploadVideosService
 
         $video = $this->ffmpeg->open($file);
         $video->filters()
-            ->pad(new Dimension(158, 280))
+            ->pad(new Dimension(170, 280))
             ->synchronize();
 
-        $video->save(new X264(), $diretorio . '/' . $nameFile);
+        $video->save(new X264('libmp3lame', 'libx264'), $diretorio . '/' . $nameFile);
 
         return $dirFile;
     }
@@ -69,7 +69,7 @@ class UploadVideosService
 
         $video = $this->ffmpeg->open($file);
         $video->filters()
-            ->pad(new Dimension(158, 280))
+            ->pad(new Dimension(170, 280))
             ->watermark(Storage::path('app/marcadagua.png'), [
                 'position' => 'relative',
                 'bottom' => 90,
@@ -77,7 +77,7 @@ class UploadVideosService
             ])
             ->synchronize();
 
-        $video->save(new X264(), $diretorio . '/' . $nameFile);
+        $video->save(new X264('libmp3lame', 'libx264'), $diretorio . '/' . $nameFile);
 
         return $dirFile;
     }

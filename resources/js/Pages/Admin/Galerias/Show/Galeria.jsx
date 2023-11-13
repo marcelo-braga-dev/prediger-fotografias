@@ -100,7 +100,7 @@ export default function Galeria({arquivos}) {
             </div>
             : 'Não há arquivos nessa pasta.'}
 
-        <ImageList sx={{minHeight: 500}} rowHeight="150" gap={8} cols={matchDownMD ? 1 : 4}>
+        <ImageList sx={{minHeight: 500}} rowHeight={150} gap={8} cols={matchDownMD ? 1 : 4}>
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
