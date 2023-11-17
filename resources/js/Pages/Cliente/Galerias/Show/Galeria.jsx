@@ -42,13 +42,15 @@ export default function Galeria({arquivos}) {
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [urlImage, setUrlImage] = useState('');
+    const [nomeImage, setNomeImage] = useState('');
     const [tipoArquivo, setTipoArquivo] = useState('');
 
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
 
-    const openLightbox = (url, tipo) => {
+    const openLightbox = (url, tipo, nome) => {
         setUrlImage(url)
+        setNomeImage(nome)
         setTipoArquivo(tipo)
         setLightboxOpen(true);
     };
@@ -127,19 +129,21 @@ export default function Galeria({arquivos}) {
                             actionIcon={<>
                                 {item.tipo === 'imagem' &&
                                     <IconButton sx={{color: 'white'}}
-                                                onClick={() => openLightbox(item.url_comprimida_marca, item.tipo)}>
+                                                onClick={() =>
+                                                    openLightbox(item.url_comprimida_marca, item.tipo, item.nome)}>
                                         <VisibilityOutlinedIcon/>
                                     </IconButton>
                                 }
                                 {item.tipo === 'video' &&
                                     <IconButton sx={{color: 'white'}}
-                                                onClick={() => openLightbox(item.url_miniatura_marca, item.tipo)}>
+                                                onClick={() =>
+                                                    openLightbox(item.url_miniatura_marca, item.tipo, item.nome)}>
                                         <VisibilityOutlinedIcon/>
                                     </IconButton>
                                 }
                                 {lightboxOpen && (
                                     <Lightbox imageUrl={urlImage} onClose={closeLightbox}
-                                              tipoArquivo={tipoArquivo} nome={item.nome}/>
+                                              tipoArquivo={tipoArquivo} nome={nomeImage}/>
                                 )}
                                 <IconButton sx={{color: 'white'}}
                                             onClick={() => setInputValue(item.nome)}>
