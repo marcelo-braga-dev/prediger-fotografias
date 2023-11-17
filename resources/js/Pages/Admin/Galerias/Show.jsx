@@ -9,7 +9,7 @@ import InfosGaleria from "@/Pages/Admin/Galerias/Show/InfosGaleria";
 
 export default function Page({galeria, arquivos, pastas}) {
     return (
-        <LayoutAdmin titlePage="Galeria" menu="galerias" voltar={route('admin.galerias.index')}>
+        <LayoutAdmin titlePage="Informaçẽos da Galeria" menu="galerias" voltar={route('admin.galerias.index')}>
             <section>
                 <InfosGaleria galeria={galeria}/>
             </section>

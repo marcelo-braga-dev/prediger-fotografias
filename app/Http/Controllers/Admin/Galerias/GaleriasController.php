@@ -50,13 +50,21 @@ class GaleriasController extends Controller
         return redirect()->route('admin.galerias.index');
     }
 
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $galeria = (new Galerias())->find($id);
-        $pastas = (new GaleriasPastas())->pastas($request->id_pasta);
+        $eventos = (new Eventos())->getNomes();
 
         return Inertia::render('Admin/Galerias/Edit',
-            compact('galeria', 'pastas'));
+            compact('galeria', 'eventos'));
+    }
+
+    public function update($id, Request $request)
+    {
+        (new Galerias())->atualizar($id, $request);
+
+        modalSucesso('Dados atualizado com sucesso!');
+        return redirect()->route('admin.galerias.show', $id);
     }
 
     public function upload($id, Request $request)

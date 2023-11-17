@@ -8,6 +8,7 @@ import Switch from "@mui/material/Switch";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import CardMedia from "@mui/material/CardMedia";
 import Card from "@mui/material/Card";
@@ -23,7 +24,7 @@ export default function InfosGaleria({galeria}) {
         router.post(route('admin.galerias.alterar-status', galeria.id), {
             status: valor,
             _method: 'put'
-        })
+        }, {preserveScroll: true})
     }
 
     const excluirGaleria = () => {
@@ -52,6 +53,9 @@ export default function InfosGaleria({galeria}) {
                         <div className="row justify-content-between">
                             <div className="col"><h6>{galeria.titulo}</h6></div>
                             <div className="col-auto">
+                                <a href={route('admin.galerias.edit', galeria.id)}>
+                                    <EditOutlinedIcon color="primary"/>
+                                </a>
                                 <button>
                                     <DeleteOutlineOutlinedIcon onClick={handleOpen} color="error"/>
                                 </button>

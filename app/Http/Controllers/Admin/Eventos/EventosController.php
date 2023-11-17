@@ -34,6 +34,21 @@ class EventosController extends Controller
         return Inertia::render('Admin/Eventos/Create', compact('status'));
     }
 
+    public function edit($id)
+    {
+        $evento = (new Eventos())->find($id);
+
+        return Inertia::render('Admin/Eventos/Edit', compact('evento'));
+    }
+
+    public function update($id, Request $request)
+    {
+        (new Eventos())->atualizar($id, $request);
+
+        modalSucesso('Dados atualizado com sucesso!');
+        return redirect()->route('admin.eventos.show', $id);
+    }
+
     public function store(Request $request)
     {
         (new Eventos())->create($request);

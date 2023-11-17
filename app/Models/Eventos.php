@@ -117,4 +117,25 @@ class Eventos extends Model
             ->find($id)
             ->delete();
     }
+
+    public function atualizar($id, $dados)
+    {
+        $this->newQuery()
+            ->find($id)
+            ->update([
+                'nome' => $dados->nome,
+                'descricao' => $dados->descricao,
+                'cidade' => $dados->cidade,
+                'estado' => $dados->estado,
+            ]);
+
+        if ($dados->logo) {
+            $url = (new UploadImagensManipular())->originalComprimida($dados->logo, 'eventos/logos');
+            $this->newQuery()
+                ->find($id)
+                ->update([
+                    'logo' => $url,
+                ]);
+        }
+    }
 }

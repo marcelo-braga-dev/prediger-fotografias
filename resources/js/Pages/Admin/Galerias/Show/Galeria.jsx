@@ -115,7 +115,7 @@ export default function Galeria({arquivos}) {
             </div>
             : 'Não há arquivos nessa pasta.'}
 
-        <ImageList sx={{minHeight: 500}} gap={8} cols={matchDownMD ? 1 : 3}>
+        <ImageList gap={8} cols={matchDownMD ? 1 : 3}>
             {arquivos.map((item) => {
                 return (
                     <ImageListItem key={item.id} cols={1} rows={2}
@@ -127,7 +127,6 @@ export default function Galeria({arquivos}) {
                                 src={`${item.url_miniatura}?w=348&fit=crop&auto=format`}
                                 alt={item.title}
                                 loading="lazy"
-
                             />}
 
                         {item.tipo === 'video' &&
@@ -166,29 +165,30 @@ export default function Galeria({arquivos}) {
                                             {valueObject[item.nome] ? <StarIcon fontSize="small"/> :
                                                 <StarBorderIcon fontSize="small"/>}
                                         </IconButton>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col mb-0">
-                                        {item.tipo === 'video' && <>
-                                            <IconButton sx={{color: 'white'}}
-                                                        onClick={() =>
-                                                            openLightbox(item.url_miniatura_marca, item.tipo)}>
-                                                <WaterDropOutlinedIcon fontSize="small"/>
-                                            </IconButton>
-                                        </>}
-                                        {item.tipo === 'imagem' && <>
-                                            <IconButton sx={{color: 'white'}}
-                                                        onClick={() =>
-                                                            openLightbox(item.url_comprimida_marca, item.tipo)}>
-                                                <WaterDropOutlinedIcon fontSize="small"/>
-                                            </IconButton>
-
-                                        </>}
                                         <IconButton sx={{color: 'white'}} className="m-0 p-0"
                                                     onClick={() => excluirArquivoModal(item.id)}>
                                             <DeleteOutlineOutlinedIcon fontSize="small"/>
                                         </IconButton>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col mb-0">
+                                        {/*{item.tipo === 'video' && <>*/}
+                                        {/*    <IconButton sx={{color: 'white'}}*/}
+                                        {/*                onClick={() =>*/}
+                                        {/*                    openLightbox(item.url_miniatura_marca, item.tipo)}>*/}
+                                        {/*        <WaterDropOutlinedIcon fontSize="small"/>*/}
+                                        {/*    </IconButton>*/}
+                                        {/*</>}*/}
+                                        {/*{item.tipo === 'imagem' && <>*/}
+                                        {/*    <IconButton sx={{color: 'white'}}*/}
+                                        {/*                onClick={() =>*/}
+                                        {/*                    openLightbox(item.url_comprimida_marca, item.tipo)}>*/}
+                                        {/*        <WaterDropOutlinedIcon fontSize="small"/>*/}
+                                        {/*    </IconButton>*/}
+
+                                        {/*</>}*/}
+
 
                                     </div>
                                 </div>

@@ -14,7 +14,7 @@ import StatusIcons from "@/Components/Partials/StatusIcons.jsx";
 export default function ({galerias}) {
 
     return (
-        <LayoutAdmin menu="galerias">
+        <LayoutAdmin menu="galerias" titlePage="Galerias">
             <section className="mb-4">
                 <div className="row justify-content-between">
                     <div className="col-auto">

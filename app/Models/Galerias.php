@@ -88,6 +88,7 @@ class Galerias extends Model
             'id' => $item->id,
             'titulo' => $item->titulo,
             'data' => convert_data($item->data),
+            'data_string' => $item->data,
             'descricao' => $item->descricao,
             'status_nome' => (new GaleriasStatus())->getStatusNome($item->status),
             'status' => $item->status,
@@ -146,5 +147,26 @@ class Galerias extends Model
         $this->newQuery()
             ->find($id)
             ->delete();
+    }
+
+    public function atualizar($id, $dados)
+    {
+        $this->newQuery()
+            ->find($id)
+            ->update([
+                'titulo' => $dados->titulo,
+                'data' => $dados->data,
+                'eventos_id' => $dados->evento,
+                'descricao' => $dados->descricao,
+            ]);
+
+        if ($dados->capa) {
+            $url = (new UploadImagensManipular())->originalComprimida($dados['capa'], "galerias/capas");
+            $this->newQuery()
+                ->find($id)
+                ->update([
+                    'capa' => $url,
+                ]);
+        }
     }
 }

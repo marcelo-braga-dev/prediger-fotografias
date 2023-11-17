@@ -67,33 +67,34 @@ export default function Pastas({galeria, pastas}) {
 
     // Upload Multiplo
     const [files, setFiles] = useState([]);
+    const [tempo, setTempo] = useState(0);
 
     const handleFileChange = (e) => {
         setFiles([...e]);
     };
-
+    console.log(tempo)
     const uploadFile = async (file) => {
-            try {
-                const data = {arquivo: file, id_pasta: pastas.atual};
-                const config = {
-                    onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
+        try {
 
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    }
+
+            const data = {arquivo: file, id_pasta: pastas.atual};
+            const config = {
+                onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
+                headers: {
+                    'Content-Type': 'multipart/form-data',
                 }
-
-                await axios.post(route('admin.galerias.upload', galeria.id),
-                    data, config
-                ).then(res => {
-
-                })
-            } catch
-                (error) {
-                console.error('Erro durante o upload:', error);
             }
+
+            await axios.post(route('admin.galerias.upload', galeria.id),
+                data, config
+            ).then(res => {
+
+            })
+        } catch
+            (error) {
+            console.error('Erro durante o upload:', error);
         }
-    ;
+    }
 
     const startUpload = async () => {
         setOpen(true);

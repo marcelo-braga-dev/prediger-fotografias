@@ -26,8 +26,9 @@ class UploadVideosService
     {
         $urls = [];
         $urls[TipoArquivoService::URL_ORIGINAL] = $this->original($file, $path);
-        $urls[TipoArquivoService::URL_MINIATURA] = $this->miniatura($file, $path);
         $urls[TipoArquivoService::URL_MINIATURA_MARCA] = $this->miniaturaMarcaDagua($file, $path);
+        $urls[TipoArquivoService::URL_MINIATURA] = $urls[TipoArquivoService::URL_MINIATURA_MARCA];
+//        $urls[TipoArquivoService::URL_MINIATURA] = $this->miniatura($file, $path);
 //        $urls[TipoArquivoService::URL_COMPRIMIDA] = $this->originalComprimida($file, $path);
 //        $urls[TipoArquivoService::URL_COMPRIMIDA_MARCA] = $this->originalMarcaDagua($file, $path);
 
@@ -44,6 +45,8 @@ class UploadVideosService
 
     public function miniatura($file, $path)
     {
+//        return 'z';
+
         $path = rtrim($path, '/');
         Storage::makeDirectory($path);
         $diretorio = Storage::path($path);
@@ -78,7 +81,9 @@ class UploadVideosService
             ])
             ->synchronize();
 
-        $video->save(new X264('libmp3lame', 'libx264'), $diretorio . '/' . $nameFile);
+        $video->save(
+            new X264('libmp3lame', 'libx264'),
+            $diretorio . '/' . $nameFile);
 
         return $dirFile;
     }

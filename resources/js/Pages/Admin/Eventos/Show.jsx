@@ -5,18 +5,19 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
-import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import StatusIcons from "@/Components/Partials/StatusIcons";
 
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+
 import Modal from "@mui/material/Modal";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import {router} from "@inertiajs/react";
 
 export default function ({evento, galerias}) {
@@ -57,6 +58,9 @@ export default function ({evento, galerias}) {
                                 <div className="row justify-content-between">
                                     <div className="col mb-0"><h6>{evento.nome}</h6></div>
                                     <div className="col-auto mb-0">
+                                        <a href={route('admin.eventos.edit', evento.id)}>
+                                            <EditOutlinedIcon color="primary"/>
+                                        </a>
                                         <button>
                                             <DeleteOutlineOutlinedIcon onClick={handleOpen} color="error"/>
                                         </button>

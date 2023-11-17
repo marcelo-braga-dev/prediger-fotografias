@@ -31,9 +31,9 @@ const estados = [
     {value: 'TO', name: 'Tocantins'},
 ]
 
-export default function SelectEstados({setData}) {
+export default function SelectEstados({setData, defaultValue}) {
     return (
-        <TextField select label="Estado" defaultValue="" fullWidth required
+        <TextField select label="Estado" defaultValue={defaultValue} fullWidth required
                    onChange={e => setData('estado', e.target.value)}>
             {estados.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
