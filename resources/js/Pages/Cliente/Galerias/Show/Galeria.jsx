@@ -10,14 +10,15 @@ import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {useMediaQuery} from "@mui/material";
 
-const Lightbox = ({imageUrl, onClose, tipoArquivo}) => {
+const Lightbox = ({imageUrl, onClose, tipoArquivo, nome}) => {
     return (
         <div className="lightbox-overlay" onClick={onClose}>
-            <div className="lightbox-content">
+            <div className="lightbox-content" onClick={() => {}}>
                 {tipoArquivo === 'imagem' && <>
                     <img src={imageUrl} alt="Imagem"/>
-                    <button onClick={onClose} className="close-button">
-                        Fechar
+                    <button className="close-button">
+                        <span className="me-4 bg-dark px-2 py-1">ID: {nome}</span>
+                        <span onClick={onClose} className=" bg-dark px-2 py-1">Fechar</span>
                     </button>
                 </>}
                 {tipoArquivo === 'video' && <>
@@ -26,7 +27,8 @@ const Lightbox = ({imageUrl, onClose, tipoArquivo}) => {
                         <source src={imageUrl} type="video/ogg"/>
                     </video>
                     <button onClick={onClose} className="close-button">
-                        Fechar
+                        <span className="me-4 bg-dark px-2 py-1">ID: {nome}</span>
+                        <span className=" bg-dark px-2 py-1">Fechar</span>
                     </button>
                 </>}
             </div>
@@ -137,7 +139,7 @@ export default function Galeria({arquivos}) {
                                 }
                                 {lightboxOpen && (
                                     <Lightbox imageUrl={urlImage} onClose={closeLightbox}
-                                              tipoArquivo={tipoArquivo}/>
+                                              tipoArquivo={tipoArquivo} nome={item.nome}/>
                                 )}
                                 <IconButton sx={{color: 'white'}}
                                             onClick={() => setInputValue(item.nome)}>
