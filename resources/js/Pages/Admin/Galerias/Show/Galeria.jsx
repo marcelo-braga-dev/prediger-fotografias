@@ -8,36 +8,13 @@ import React, {useEffect, useState} from "react";
 
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
 
 import {router} from "@inertiajs/react";
 import {Box, useMediaQuery} from "@mui/material";
 import Modal from "@mui/material/Modal";
 import {useTheme} from "@mui/material/styles";
 
-const Lightbox = ({imageUrl, onClose, tipoArquivo}) => {
-    return (
-        <div className="lightbox-overlay" onClick={onClose}>
-            <div className="lightbox-content">
-                {tipoArquivo === 'imagem' && <>
-                    <img src={imageUrl} alt="Imagem"/>
-                    <button onClick={onClose} className="close-button">
-                        Fechar
-                    </button>
-                </>}
-                {tipoArquivo === 'video' && <>
-                    <video controls muted preload="metadata">
-                        <source src={imageUrl} type="video/mp4"/>
-                        <source src={imageUrl} type="video/ogg"/>
-                    </video>
-                    <button onClick={onClose} className="close-button">
-                        Fechar
-                    </button>
-                </>}
-            </div>
-        </div>
-    );
-};
+import {Lightbox} from "@/Components/Partials/Lightbox.jsx";
 
 export default function Galeria({arquivos}) {
     const [valueObject, setValueObject] = useState({});

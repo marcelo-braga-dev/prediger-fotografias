@@ -67,12 +67,11 @@ export default function Pastas({galeria, pastas}) {
 
     // Upload Multiplo
     const [files, setFiles] = useState([]);
-    const [tempo, setTempo] = useState(0);
 
     const handleFileChange = (e) => {
         setFiles([...e]);
     };
-    console.log(tempo)
+
     const uploadFile = async (file) => {
         try {
 

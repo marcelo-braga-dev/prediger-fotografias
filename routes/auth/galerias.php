@@ -18,4 +18,7 @@ Route::middleware('auth')
 
         Route::put('galeria/alterar-status/{id}', [GaleriasController::class, 'alterarStatus'])
             ->name('galerias.alterar-status');
+
+        Route::get('galeria/arquivos/{id}/{idPasta}', [GaleriasController::class, 'getArquivos'])
+            ->name('galerias.arquivos');
     });

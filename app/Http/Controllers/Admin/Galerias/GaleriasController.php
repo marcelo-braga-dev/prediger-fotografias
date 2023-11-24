@@ -36,10 +36,9 @@ class GaleriasController extends Controller
     {
         $galeria = (new Galerias())->find($id);
         $pastas = (new GaleriasPastas())->pastas($request->id_pasta, $id);
-        $arquivos = (new GaleriasArquivos())->galeria($id, $request->id_pasta);
 
         return Inertia::render('Admin/Galerias/Show',
-            compact('galeria', 'arquivos', 'pastas'));
+            compact('galeria', 'pastas'));
     }
 
     public function store(Request $request)
@@ -93,7 +92,6 @@ class GaleriasController extends Controller
         }
 
         modalSucesso('Arquivos armazenados com sucesso!');
-//        return redirect()->route('admin.galerias.show', [$id, 'id_pasta' => $request['id_pasta']]);
     }
 
     public function destroy($id)
@@ -109,5 +107,11 @@ class GaleriasController extends Controller
         $status = $request->status ? (new GaleriasStatus())->publica() : (new GaleriasStatus())->privado();
 
         (new Galerias())->alterarStatus($id, $status);
+    }
+
+    public function getArquivos($id, $idPasta)
+    {
+        return (new GaleriasArquivos())->galeria($id, $idPasta);
+
     }
 }

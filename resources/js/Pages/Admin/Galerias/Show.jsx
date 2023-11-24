@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import LayoutAdmin from "@/Layouts/AdminLayout/LayoutAdmin.jsx";
 
 import Card from "@mui/material/Card";
@@ -7,7 +7,15 @@ import Pastas from "@/Pages/Admin/Galerias/Show/Pastas";
 import Galeria from "@/Pages/Admin/Galerias/Show/Galeria";
 import InfosGaleria from "@/Pages/Admin/Galerias/Show/InfosGaleria";
 
-export default function Page({galeria, arquivos, pastas}) {
+export default function Page({galeria, pastas}) {
+
+    const [arquivos, setArquivos] = useState([])
+
+    useEffect(() => {
+        axios.get(route('admin.galerias.arquivos', [galeria.id, pastas.atual]))
+            .then(res => setArquivos(res.data))
+    }, [])
+
     return (
         <LayoutAdmin titlePage="Informaçẽos da Galeria" menu="galerias" voltar={route('admin.galerias.index')}>
             <section>
