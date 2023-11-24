@@ -17,7 +17,7 @@ import {router} from "@inertiajs/react";
 
 import Modal from '@mui/material/Modal';
 
-export default function InfosGaleria({galeria}) {
+export default function InfosGaleria({galeria, pastaId}) {
     const [status, setStatus] = useState(galeria.status === 'publica');
 
     function alterarStatus(valor) {
@@ -51,8 +51,8 @@ export default function InfosGaleria({galeria}) {
                 <div className="col-md-9">
                     <CardContent>
                         <div className="row justify-content-between">
-                            <div className="col"><h6>{galeria.titulo}</h6></div>
-                            <div className="col-auto">
+                            <div className="col mb-0"><h6>{galeria.titulo}</h6></div>
+                            <div className="col-auto mb-0">
                                 <a href={route('admin.galerias.edit', galeria.id)}>
                                     <EditOutlinedIcon color="primary"/>
                                 </a>
@@ -115,8 +115,12 @@ export default function InfosGaleria({galeria}) {
                             {/*{galeria.status === 'privado' && <span className="d-block d-md-inline">Senha: {galeria.senha}</span>}*/}
                         </div>
 
-                        <Typography className="mt-4 text-wrap" variant="h5" color="info" component="div">
-                            Link: <br/>{route('clientes.galerias.show', [galeria.token, galeria.id])}
+                        <Typography className="mt-2 text-wrap" variant="h6" color="info" component="div">
+                            Link da Galeria: <br/>{route('clientes.galerias.show', [galeria.token, galeria.id])}
+                        </Typography>
+                        <Typography className="mt-2 text-wrap" variant="h6" color="info" component="div">
+                            Link da Pasta: <br/>
+                           {route('clientes.galerias.show', [galeria.token, galeria.id, {id_pasta: pastaId}])}
                         </Typography>
                     </CardContent>
 

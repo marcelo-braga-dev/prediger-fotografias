@@ -11,7 +11,7 @@ export default function Page({galeria, pastas}) {
     return (
         <LayoutAdmin titlePage="Informaçẽos da Galeria" menu="galerias" voltar={route('admin.galerias.index')}>
             <section>
-                <InfosGaleria galeria={galeria}/>
+                <InfosGaleria galeria={galeria} pastaId={pastas.atual}/>
             </section>
 
             <section>
