@@ -7,4 +7,7 @@ Route::name('clientes.')
     ->prefix('5d4a/{hash}/')
     ->group(function () {
         Route::resource('galerias', GaleriasController::class);
+
+        Route::get('galeria/arquivos/{idPasta}', [GaleriasController::class, 'getArquivos'])
+            ->name('galerias.arquivos');
     });

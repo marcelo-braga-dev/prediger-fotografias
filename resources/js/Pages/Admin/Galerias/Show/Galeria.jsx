@@ -16,6 +16,9 @@ import {useTheme} from "@mui/material/styles";
 
 import {Lightbox} from "@/Components/Partials/Lightbox.jsx";
 
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
 export default function Galeria({arquivos}) {
     const [valueObject, setValueObject] = useState({});
     const [inputValue, setInputValue] = useState();
@@ -107,7 +110,7 @@ export default function Galeria({arquivos}) {
                             />}
 
                         {item.tipo === 'video' &&
-                            <video controls muted preload="metadata"
+                            <video controls muted
                                    onClick={() => setInputValue(item.nome)}>
                                 <source src={item.url_miniatura} type="video/mp4"/>
                                 <source src={item.url_miniatura} type="video/ogg"/>

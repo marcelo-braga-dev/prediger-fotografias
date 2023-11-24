@@ -4,7 +4,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import {MuiFileInput} from "mui-file-input";
 import List from "@mui/material/List";
-import IconButton from "@mui/material/IconButton";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import React, {useState} from "react";
@@ -12,7 +11,6 @@ import {router, useForm} from "@inertiajs/react";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CreateNewFolderOutlinedIcon from "@mui/icons-material/CreateNewFolderOutlined";
 import UploadOutlinedIcon from '@mui/icons-material/UploadOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -20,13 +18,12 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 
 import {covertDataNumber, covertTamanhoArquivo} from "@/helpers/conversoes.js";
-import {verificaTipoArquivo} from "@/helpers/dados.js";
 
 import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
 
-export default function Pastas({galeria, pastas}) {
+export default function Pastas({galeria, pastas, pagination}) {
     const {setData, data, post} = useForm({
         galeria_id: galeria.id,
         id_pasta: pastas.atual,
@@ -38,18 +35,6 @@ export default function Pastas({galeria, pastas}) {
     const [open, setOpen] = React.useState(false);
     const [indUp, setIndUp] = React.useState(undefined);
     const [progresso, setProgresso] = React.useState(0);
-
-    // async function submit() {
-    //     router.post(route('admin.galerias.upload', galeria.id),
-    //         {arquivo: files[0], id_pasta: pastas.atual, _method: 'post'})
-    //     setOpen(true);
-    // }
-    //
-    // router.on('success', (event) => {
-    //     data.arquivos = {}
-    //     setBtnUpload(false)
-    //     setOpen(false);
-    // })
 
     const criarPasta = (e) => {
         e.preventDefault()
@@ -74,8 +59,6 @@ export default function Pastas({galeria, pastas}) {
 
     const uploadFile = async (file) => {
         try {
-
-
             const data = {arquivo: file, id_pasta: pastas.atual};
             const config = {
                 onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
@@ -104,7 +87,6 @@ export default function Pastas({galeria, pastas}) {
 
         setOpen(false);
         window.location.reload()
-        console.log('Todos os arquivos foram carregados com sucesso!');
     };
     // Upload Multiplo - fim
 

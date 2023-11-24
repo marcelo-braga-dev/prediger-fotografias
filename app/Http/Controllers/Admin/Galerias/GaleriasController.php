@@ -112,6 +112,5 @@ class GaleriasController extends Controller
     public function getArquivos($id, $idPasta)
     {
         return (new GaleriasArquivos())->galeria($id, $idPasta);
-
     }
 }

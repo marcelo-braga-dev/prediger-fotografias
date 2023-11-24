@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Services\Files\TipoArquivoService;
-use App\Services\Files\UploadImagensManipular;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -48,8 +47,8 @@ class GaleriasArquivos extends Model
             ->where('galerias_id', $id)
             ->where('pasta', $pasta)
             ->orderByDesc('id')
-            ->get()
-            ->transform(function ($item) {
+            ->paginate(9)
+            ->through(function ($item) {
                 return [
                     'id' => $item->id,
                     'nome' => $item->nome ?? '',

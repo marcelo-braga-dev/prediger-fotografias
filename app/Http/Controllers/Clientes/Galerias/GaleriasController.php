@@ -11,21 +11,19 @@ use Inertia\Inertia;
 
 class GaleriasController extends Controller
 {
-    public function index($hash)
-    {
-
-        print_pre($hash);
-    }
-
     public function show($hash, Request $request)
     {
         $galeria = (new Galerias())->getPeloToken($hash);
         $pastas = (new GaleriasPastas())->pastas($request->id_pasta, $galeria['id']);
-        $arquivos = (new GaleriasArquivos())->galeria($galeria['id'], $request->id_pasta);
-//        print_pre($arquivos);
 
         return Inertia::render('Cliente/Galerias/Show',
-            compact('galeria', 'arquivos', 'pastas'));
+            compact('galeria', 'pastas'));
+    }
 
+    public function getArquivos($hash, $idPasta)
+    {
+        $galeria = (new Galerias())->getPeloToken($hash);
+
+        return (new GaleriasArquivos())->galeria($galeria['id'], $idPasta);
     }
 }
