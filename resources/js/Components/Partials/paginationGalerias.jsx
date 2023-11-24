@@ -2,10 +2,18 @@ import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import React, {useEffect, useState} from "react";
 
-export default function PaginationGalerias({urlRoute, galeriaId, pastasAtual, setArquivos}) {
+export default function PaginationGalerias({
+                                               urlRoute,
+                                               galeriaId,
+                                               pastasAtual,
+                                               setArquivos,
+                                               setQtdArquivos,
+                                               page,
+                                               setPage
+                                           }) {
 
-    const [page, setPage] = React.useState(1);
     const [pagination, setpagination] = useState()
+
     const handleChange = (event, value) => {
         setPage(value);
     };
@@ -17,6 +25,8 @@ export default function PaginationGalerias({urlRoute, galeriaId, pastasAtual, se
         ).then(res => {
             setArquivos(res.data.data ?? [])
             setpagination(res.data)
+            setQtdArquivos(res.data.total)
+            // setQtdArquivos(res.data)
         })
     }
 
@@ -26,13 +36,10 @@ export default function PaginationGalerias({urlRoute, galeriaId, pastasAtual, se
     }, [page])
 
     return (
-        <div className="row justify-content-center mt-2">
-            <div className="col-auto">
-                <Pagination
-                    count={pagination?.last_page} page={pagination?.current_page ?? 1}
-                    color="secondary"
-                    onChange={handleChange}/>
-            </div>
-        </div>
+        pagination?.last_page > 1 &&
+        <Pagination
+            count={pagination?.last_page} page={pagination?.current_page ?? 1}
+            color="secondary"
+            onChange={handleChange}/>
     )
 }

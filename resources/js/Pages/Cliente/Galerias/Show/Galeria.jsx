@@ -9,11 +9,13 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import {useMediaQuery} from "@mui/material";
+import PaginationGalerias from "@/Components/Partials/paginationGalerias.jsx";
 
 const Lightbox = ({imageUrl, onClose, tipoArquivo, nome}) => {
     return (
         <div className="lightbox-overlay" onClick={onClose}>
-            <div className="lightbox-content" onClick={() => {}}>
+            <div className="lightbox-content" onClick={() => {
+            }}>
                 {tipoArquivo === 'imagem' && <>
                     <img src={imageUrl} alt="Imagem"/>
                     <button className="close-button">
@@ -36,7 +38,7 @@ const Lightbox = ({imageUrl, onClose, tipoArquivo, nome}) => {
     );
 };
 //
-export default function Galeria({arquivos}) {
+export default function Galeria({pastas, galeria}) {
     const [valueObject, setValueObject] = useState({});
     const [inputValue, setInputValue] = useState();
 
@@ -44,6 +46,9 @@ export default function Galeria({arquivos}) {
     const [urlImage, setUrlImage] = useState('');
     const [nomeImage, setNomeImage] = useState('');
     const [tipoArquivo, setTipoArquivo] = useState('');
+    const [arquivos, setArquivos] = useState([])
+    const [qtdArquivos, setQtdArquivos] = useState(0)
+    const [page, setPage] = React.useState(1);
 
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -78,8 +83,15 @@ export default function Galeria({arquivos}) {
     }, [inputValue])
 
     return (<>
-        <div className="row justify-content-end">
-            <div className="col-auto mb-0"><small>Total: {arquivos.length}</small></div>
+        <div className="row justify-content-between">
+            <div className="col-2"></div>
+            <div className="col-auto">
+                <PaginationGalerias
+                    pastasAtual={pastas.atual} galeriaId={galeria.token} setArquivos={setArquivos}
+                    urlRoute="clientes.galerias.arquivos" setQtdArquivos={setQtdArquivos}
+                    page={page} setPage={setPage}/>
+            </div>
+            <div className="col-2 text-end pt-2"><span>Total Arquivos: {qtdArquivos}</span></div>
         </div>
         {arquivos.length ?
             <div className="row">
@@ -157,5 +169,13 @@ export default function Galeria({arquivos}) {
                 );
             })}
         </ImageList>
+        <div className="row justify-content-center pt-4">
+            <div className="col-auto">
+                <PaginationGalerias
+                    pastasAtual={pastas.atual} galeriaId={galeria.token} setArquivos={setArquivos}
+                    urlRoute="clientes.galerias.arquivos" setQtdArquivos={setQtdArquivos}
+                    page={page} setPage={setPage}/>
+            </div>
+        </div>
     </>)
 }

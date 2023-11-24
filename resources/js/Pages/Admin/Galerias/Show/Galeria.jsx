@@ -18,8 +18,9 @@ import {Lightbox} from "@/Components/Partials/Lightbox.jsx";
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import PaginationGalerias from "@/Components/Partials/paginationGalerias.jsx";
 
-export default function Galeria({arquivos}) {
+export default function Galeria({pastas, galeria}) {
     const [valueObject, setValueObject] = useState({});
     const [inputValue, setInputValue] = useState();
 
@@ -27,6 +28,9 @@ export default function Galeria({arquivos}) {
     const [urlImage, setUrlImage] = useState('');
     const [idArquivoExcluir, setIdArquivoExcluir] = useState();
     const [tipoArquivo, setTipoArquivo] = useState('');
+    const [arquivos, setArquivos] = useState([])
+    const [qtdArquivos, setQtdArquivos] = useState(0)
+    const [page, setPage] = React.useState(1);
 
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -78,8 +82,15 @@ export default function Galeria({arquivos}) {
     }, [inputValue])
 
     return (<>
-        <div className="row justify-content-end">
-            <div className="col-auto mb-0"><small>Total: {arquivos.length}</small></div>
+        <div className="row justify-content-between">
+            <div className="col-2"></div>
+            <div className="col-auto">
+                <PaginationGalerias
+                    pastasAtual={pastas.atual} galeriaId={galeria.token} setArquivos={setArquivos}
+                    urlRoute="clientes.galerias.arquivos" setQtdArquivos={setQtdArquivos}
+                    page={page} setPage={setPage}/>
+            </div>
+            <div className="col-2 text-end pt-2"><span>Total Arquivos: {qtdArquivos}</span></div>
         </div>
         {arquivos.length ?
             <div className="row">
@@ -151,27 +162,6 @@ export default function Galeria({arquivos}) {
                                         </IconButton>
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col mb-0">
-                                        {/*{item.tipo === 'video' && <>*/}
-                                        {/*    <IconButton sx={{color: 'white'}}*/}
-                                        {/*                onClick={() =>*/}
-                                        {/*                    openLightbox(item.url_miniatura_marca, item.tipo)}>*/}
-                                        {/*        <WaterDropOutlinedIcon fontSize="small"/>*/}
-                                        {/*    </IconButton>*/}
-                                        {/*</>}*/}
-                                        {/*{item.tipo === 'imagem' && <>*/}
-                                        {/*    <IconButton sx={{color: 'white'}}*/}
-                                        {/*                onClick={() =>*/}
-                                        {/*                    openLightbox(item.url_comprimida_marca, item.tipo)}>*/}
-                                        {/*        <WaterDropOutlinedIcon fontSize="small"/>*/}
-                                        {/*    </IconButton>*/}
-
-                                        {/*</>}*/}
-
-
-                                    </div>
-                                </div>
                             </>
                             }
                             actionPosition="right"
@@ -180,6 +170,15 @@ export default function Galeria({arquivos}) {
                 );
             })}
         </ImageList>
+
+        <div className="row justify-content-center pt-4">
+            <div className="col-auto">
+                <PaginationGalerias
+                    pastasAtual={pastas.atual} galeriaId={galeria.token} setArquivos={setArquivos}
+                    urlRoute="clientes.galerias.arquivos" setQtdArquivos={setQtdArquivos}
+                    page={page} setPage={setPage}/>
+            </div>
+        </div>
 
         {lightboxOpen && (
             <Lightbox imageUrl={urlImage} onClose={closeLightbox}
