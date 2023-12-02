@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->bigInteger('pasta');
             $table->string('nome');
             $table->string('url_original');
+            $table->string('url_capa')->nullable();
             $table->string('url_comprimida')->nullable();
             $table->string('url_comprimida_marca')->nullable();
             $table->string('url_miniatura')->nullable();
