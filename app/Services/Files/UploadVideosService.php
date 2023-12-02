@@ -41,7 +41,7 @@ class UploadVideosService
     public function original($file, $path)
     {
         if ($file->isValid()) {
-            return $file->store($path);
+            return '';//$file->store($path);
         }
         return '';
     }
