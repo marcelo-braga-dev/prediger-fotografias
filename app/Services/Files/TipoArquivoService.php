@@ -13,6 +13,7 @@ class TipoArquivoService
     public const URL_COMPRIMIDA_MARCA = 2;
     public const URL_MINIATURA = 3;
     public const URL_MINIATURA_MARCA = 4;
+    public const URL_CAPA = 5;
 
     public function verificarMime($mime): string
     {

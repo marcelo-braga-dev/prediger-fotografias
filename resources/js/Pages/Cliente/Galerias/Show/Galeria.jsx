@@ -24,7 +24,7 @@ const Lightbox = ({imageUrl, onClose, tipoArquivo, nome}) => {
                     </button>
                 </>}
                 {tipoArquivo === 'video' && <>
-                    <video controls muted preload="metadata">
+                    <video controls muted preload="metadata" >
                         <source src={imageUrl} type="video/mp4"/>
                         <source src={imageUrl} type="video/ogg"/>
                     </video>
@@ -123,7 +123,7 @@ export default function Galeria({pastas, galeria}) {
                             />}
 
                         {item.tipo === 'video' &&
-                            <video controls muted
+                            <video controls muted preload="metadata" poster={item.url_capa}
                                    onClick={() => setInputValue(item.nome)}>
                                 <source src={item.url_miniatura_marca} type="video/mp4"/>
                                 <source src={item.url_miniatura_marca} type="video/ogg"/>
