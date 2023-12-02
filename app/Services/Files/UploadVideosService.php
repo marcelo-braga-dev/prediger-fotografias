@@ -91,9 +91,9 @@ class UploadVideosService
 
         // CAPA
 //        $capa = $this->ffmpeg->open($dirFile);
-        $video
-            ->frame(TimeCode::fromSeconds(0))
-            ->save($diretorio . '/' . $nameFileCapa);
+//        $video
+//            ->frame(TimeCode::fromSeconds(0))
+//            ->save($diretorio . '/' . $nameFileCapa);
 
         return $dirFileUrl;
     }
