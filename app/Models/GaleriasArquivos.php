@@ -49,7 +49,7 @@ class GaleriasArquivos extends Model
             ->where('galerias_id', $id)
             ->where('pasta', $pasta)
             ->orderByDesc('id')
-            ->paginate(6)
+            ->paginate(9)
             ->through(function ($item) {
                 return [
                     'id' => $item->id,

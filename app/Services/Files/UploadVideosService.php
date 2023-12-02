@@ -48,8 +48,6 @@ class UploadVideosService
 
     public function miniatura($file, $path)
     {
-//        return 'z';
-
         $path = rtrim($path, '/');
         Storage::makeDirectory($path);
         $diretorio = Storage::path($path);
@@ -92,16 +90,11 @@ class UploadVideosService
             new X264('libmp3lame', 'libx264'), $dirFile);
 
         // CAPA
-        $capa = $this->ffmpeg->open($dirFile);
-        $capa
+//        $capa = $this->ffmpeg->open($dirFile);
+        $video
             ->frame(TimeCode::fromSeconds(0))
             ->save($diretorio . '/' . $nameFileCapa);
 
         return $dirFileUrl;
-    }
-
-    private function capa($file, string $path)
-    {
-
     }
 }
