@@ -32,7 +32,7 @@ export default function Pastas({galeria, pastas, pagination}) {
 
     const [btnNovaPasta, setBtnNovaPasta] = useState(false);
     const [btnUpload, setBtnUpload] = useState(false);
-    const [open, setOpen] = React.useState(false);
+    const [startedUpload, setStartedUpload] = React.useState(false);
     const [indUp, setIndUp] = React.useState(undefined);
     const [progresso, setProgresso] = React.useState(0);
 
@@ -79,14 +79,14 @@ export default function Pastas({galeria, pastas, pagination}) {
     }
 
     const startUpload = async () => {
-        setOpen(true);
+        setStartedUpload(true);
         for (let i = 0; i < files.length; i++) {
             setIndUp(i)
             await uploadFile(files[i]);
         }
 
-        setOpen(false);
-        window.location.reload()
+        setStartedUpload(false);
+        // window.location.reload()
     };
     // Upload Multiplo - fim
 
@@ -187,7 +187,7 @@ export default function Pastas({galeria, pastas, pagination}) {
                                     </button>
                                 </div>
                                 <div className="col">
-                                    {open && <CircularProgress size={30}/>}
+                                    {startedUpload && <CircularProgress size={30}/>}
                                 </div>
                             </div>
                             {/*</form>*/}
