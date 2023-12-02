@@ -121,7 +121,7 @@ export default function Galeria({pastas, galeria}) {
                             />}
 
                         {item.tipo === 'video' &&
-                            <video controls muted poster={item.url_capa} preload="metadata"
+                            <video controls muted poster={item.url_capa} preload="none"
                                    onClick={() => setInputValue(item.nome)}>
                                 <source src={item.url_miniatura} type="video/mp4"/>
                                 <source src={item.url_miniatura} type="video/ogg"/>
