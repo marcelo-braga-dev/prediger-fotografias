@@ -28,9 +28,9 @@ class UploadVideosService
     {
         $urls = [];
         $urls[TipoArquivoService::URL_ORIGINAL] = $this->original($file, $path);
-        $urls[TipoArquivoService::URL_MINIATURA_MARCA] = $this->miniaturaMarcaDagua($file, $path);
-        $urls[TipoArquivoService::URL_MINIATURA] = $urls[TipoArquivoService::URL_MINIATURA_MARCA];
-        $urls[TipoArquivoService::URL_CAPA] = $this->capa;
+        $urls[TipoArquivoService::URL_MINIATURA_MARCA] = ''; ///$this->miniaturaMarcaDagua($file, $path);
+        $urls[TipoArquivoService::URL_MINIATURA] = ''; /// $urls[TipoArquivoService::URL_MINIATURA_MARCA];
+        $urls[TipoArquivoService::URL_CAPA] = ''; /// $this->capa;
 //        $urls[TipoArquivoService::URL_MINIATURA] = $this->miniatura($file, $path);
 //        $urls[TipoArquivoService::URL_COMPRIMIDA] = $this->originalComprimida($file, $path);
 //        $urls[TipoArquivoService::URL_COMPRIMIDA_MARCA] = $this->originalMarcaDagua($file, $path);
@@ -41,7 +41,7 @@ class UploadVideosService
     public function original($file, $path)
     {
         if ($file->isValid()) {
-            return '';//$file->store($path);
+            return $file->store($path);
         }
         return '';
     }
