@@ -5,7 +5,6 @@ import ListItemText from "@mui/material/ListItemText";
 import {MuiFileInput} from "mui-file-input";
 import List from "@mui/material/List";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import React, {useState} from "react";
 import {router, useForm} from "@inertiajs/react";
 
