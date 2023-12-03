@@ -22,7 +22,6 @@ import {covertDataNumber, covertTamanhoArquivo} from "@/helpers/conversoes.js";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
-axios.defaults.headers.post['Content-Length'] = 512 * 1024 * 1024;
 
 export default function Pastas({galeria, pastas, pagination}) {
     const {setData, data, post} = useForm({
@@ -64,7 +63,6 @@ export default function Pastas({galeria, pastas, pagination}) {
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Content-Length': 512 * 1024 * 1024, // 20 MB em bytes
                 },
                 onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
             }
