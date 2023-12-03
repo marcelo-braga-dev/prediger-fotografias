@@ -27,7 +27,7 @@ class UploadVideosService
     public function todos($file, string $path)
     {
         $urls = [];
-        $urls[TipoArquivoService::URL_ORIGINAL] = $this->original($file, $path);
+        $urls[TipoArquivoService::URL_ORIGINAL] =  ''; ///$this->original($file, $path);
         $urls[TipoArquivoService::URL_MINIATURA_MARCA] = ''; ///$this->miniaturaMarcaDagua($file, $path);
         $urls[TipoArquivoService::URL_MINIATURA] = ''; /// $urls[TipoArquivoService::URL_MINIATURA_MARCA];
         $urls[TipoArquivoService::URL_CAPA] = ''; /// $this->capa;
