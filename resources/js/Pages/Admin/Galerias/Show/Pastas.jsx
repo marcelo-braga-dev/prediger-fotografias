@@ -22,6 +22,7 @@ import {covertDataNumber, covertTamanhoArquivo} from "@/helpers/conversoes.js";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import axios from 'axios';
+axios.defaults.headers.post['Content-Length'] = 512 * 1024 * 1024;
 
 export default function Pastas({galeria, pastas, pagination}) {
     const {setData, data, post} = useForm({
@@ -61,10 +62,11 @@ export default function Pastas({galeria, pastas, pagination}) {
         try {
             const data = {arquivo: file, id_pasta: pastas.atual};
             const config = {
-                onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                }
+                    'Content-Length': 512 * 1024 * 1024, // 20 MB em bytes
+                },
+                onUploadProgress: progressEvent => setProgresso(progressEvent.loaded / file.size * 100),
             }
 
             await axios.post(route('admin.galerias.upload', galeria.id),
@@ -86,7 +88,7 @@ export default function Pastas({galeria, pastas, pagination}) {
         }
 
         setStartedUpload(false);
-        // window.location.reload()
+        window.location.reload()
     };
     // Upload Multiplo - fim
 
